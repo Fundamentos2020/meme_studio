@@ -5,26 +5,43 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Iniciar sesión - MemeStudio</title>
         <link rel="stylesheet" href="estilo.css">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     </head>
     <body>
-        <nav>
-            <input type="checkbox" id="check">
-            <label class="logo">MemeStudio</label>
-            <label for="check" class="checkbtn">
-                <i class="fas fa-bars"></i>
-            </label> 
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="populares.html">Populares</a></li>
-                <li><a href="generador.html" target="_blank">Generador</a></li>
-                <li><a href="moderar.html">Moderar</a></li>
-                <li>
-                    <div id="search">
-                        <input type="search" placeholder="Buscar..">
-                    </div>
-                </li>
-                <li><a href="inicio_sesion.html">Usuario</a></li>
-            </ul>
-        </nav>
+        <div>
+            <nav>
+                <input type="checkbox" id="check">
+                <label class="logo">MemeStudio</label>
+                <label for="check" class="checkbtn">
+                    <i class="fas fa-bars"></i>
+                </label> 
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="populares.html">Populares</a></li>
+                    <li><a href="generador.html" target="_blank">Generador</a></li>
+                    <li><a href="moderar.html">Moderar</a></li>
+                    <li>
+                        <div id="search">
+                            <input type="search" placeholder="Buscar..">
+                        </div>
+                    </li>
+                    <li><a href="inicio_sesion.html">Usuario</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="loginbox">
+            <img src="avatar.png" class="avatar">
+                <h1>Iniciar sesión</h1>
+                <form>
+                    <p>Usuario</p>
+                    <input type="text" name="" placeholder="Ingresa tu usuario">
+                    <p>Contraseña</p>
+                    <input type="password" name="" placeholder="Ingresa tu contraseña">
+                    <input type="submit" name="" value="Login">
+                    <a href="#">¿Olvidaste tu contraseña?</a><br>
+                    <a href="registro_usuario.html" target="_blank">¿Aún no tienes cuenta? Regístrate</a>
+                </form>
+                
+            </div>
     </body>
 </html>
