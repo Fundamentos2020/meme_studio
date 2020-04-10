@@ -82,6 +82,7 @@
     .write-new{
         width: 100%;
     }
+}
 
 nav{
     overflow: hidden;
@@ -287,6 +288,11 @@ label.logo{
     padding: 2em;
 }
 
+.my-1 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 .my-2 {
     margin-top: 2em;
     margin-bottom: 2em;
@@ -315,6 +321,10 @@ label.logo{
     text-align: center;
 }
 
+.align-top{
+    vertical-align: top;
+}
+
 
 .float-right {
     float: right;
@@ -332,6 +342,9 @@ label.logo{
     border-radius: 5px;
 }
 
+.bb {
+    border-bottom: 1px solid #aaa;
+}
 
 
 .meme {
@@ -684,9 +697,10 @@ h1{
 
     padding: 10px 25px;
     margin-top: 18px;
+}
 
 /*media queries para hacer el nav responsivo*/
-@media screen and (max-width: 860px){
+@media screen and (max-width: 866px){
     .boton-menu{
         display: inline-block;
     }
@@ -758,7 +772,7 @@ h1{
 
 
 
-@media screen and (min-width: 861px) and (max-width: 1099px){
+@media screen and (min-width: 867px) and (max-width: 1099px){
     nav ul li{
         margin: 0 1px;
     }

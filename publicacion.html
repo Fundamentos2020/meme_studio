@@ -8,16 +8,12 @@
         <link rel="stylesheet" href="comentarios.css">
     </head>
     <body>
-        <nav>
-            <input type="checkbox" id="check">
+        <nav class="topnav">
             <label class="logo">MemeStudio</label>
-            <label for="check" class="checkbtn">
-                <i class="fas fa-bars"></i>
-            </label> 
             <ul>
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="populares.html">Populares</a></li>
-                <li><a href="generador.html" target="_blank">Generador</a></li>
+                <li><a href="generador.html">Generador</a></li>
                 <li><a href="moderar.html">Moderar</a></li>
                 <li>
                     <div id="search">
@@ -25,74 +21,86 @@
                     </div>
                 </li>
                 <li><a href="inicio_sesion.html">Usuario</a></li>
+                <li class="boton-menu"><a href="javascript:void(0);" onclick="ajustarNavbar()">&#9776</a></li>
             </ul>
         </nav>
 
         <div class="py-2 container">
             <div class="p-1 mb-2 col-s-12 col-m-8 offset-m-2 back-white rounded-border">
-                <div class="pb-1">
-                    <h3 class="pb-0p25">Titulo</h3>
-                    <p><i>Usuario</i></p>
-                </div>
-                <div class="text-center pb-1"><img class="meme" src="https://picsum.photos/800/600" /></div>
-                <div>
-                    <img class="icono" src="imagenes/pulgar_arriba.png">
-                    <label class="pb-1">12</label>
-                    <img class="icono" src="imagenes/pulgar_abajo.png">
-                    <label>5</label>
-                </div>
-                <div>
-                    <!-- Contenedor Principal -->
-                    <div class="comments-container col-s-12">
-                        <h1>Comentarios</h1>
-                        <div class="row boxcomm">
-                            <div class="col-m-8 col-s-12">
-                                <input type="text" class="commarea"/>
-                            </div>
 
-                            <div class="col-m-4 col-s-12">
-                                <button>Enviar</button>
-                            </div>
+                <!-- Seccion meme -->
+                <div class="row bb py-1">
+                    <div class="col-s-12 offset-s-0 offset-m-2 col-m-8">
+                        <div class="pb-1">
+                            <h3 class="pb-0p25">Titulo</h3>
+                            <p><i>Usuario</i></p>
                         </div>
-                        
-                        <ul id="comments-list" class="comments-list col-s-12">
-                            <li>
-                                <div>
-                                    <!-- Avatar -->
-                                    <div class="comment-avatar"><img src="imagenes/avatar.png" alt=""></div>
-                                    <!-- Contenedor del Comentario -->
-                                    <div class="comment-box">
-                                        <div class="comment-head">
-                                            <h6 class="comment-name"><a href="perfilUsuario.html">usuario</a></h6>
-                                            <span>hace 20 minutos</span>
-                                        </div>
-                                        <div class="comment-content">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                        <div class="pb-1"><img class="meme" src="https://picsum.photos/800/600" /></div>
+                        <div class="mb-1">
+                            <img class="icono" src="imagenes/pulgar_arriba.png">
+                            <label class="pb-1">12</label>
+                            <img class="icono" src="imagenes/pulgar_abajo.png">
+                            <label>5</label>
+                        </div>
+                    </div>
+                </div>
 
-                            <li>
-                                <div>
-                                    <!-- Avatar --> 
-                                    <div class="comment-avatar"><img src="imagenes/avatar.png" alt=""></div>
-                                    <!-- Contenedor del Comentario -->
-                                    <div class="comment-box">
-                                        <div class="comment-head">
-                                            <h6 class="comment-name"><a href="perfilUsuario.html">usuario</a></h6>
-                                            <span>hace 10 minutos</span>
-                                        </div>
-                                        <div class="comment-content">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                <div class="row">
+                    <div class="offset-m-1 col-m-11">
+                        <!-- Contenedor Principal -->
+                        <div class="comments-container col-s-12">
+                            <h1>Comentarios</h1>
+                            <div class="row boxcomm">
+                                <div class="col-s-12">
+                                    <textarea class="caja-comentarios" placeholder="Comentarios ..."></textarea>
+                                </div>
+
+                                <div class="col-s-12">
+                                    <input class="entrada" type="button" value="Enviar">
+                                </div>
+                            </div>
+                            
+                            <ul id="comments-list" class="comments-list col-s-12">
+                                <li>
+                                    <div>
+                                        <!-- Avatar -->
+                                        <div class="comment-avatar"><img src="imagenes/avatar.png" alt=""></div>
+                                        <!-- Contenedor del Comentario -->
+                                        <div class="comment-box">
+                                            <div class="comment-head">
+                                                <h6 class="comment-name"><a href="perfilUsuario.html">usuario</a></h6>
+                                                <span>hace 20 minutos</span>
+                                            </div>
+                                            <div class="comment-content">
+                                                Lorem ipsum dolor sit amet, consec
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+
+                                <li>
+                                    <div>
+                                        <!-- Avatar --> 
+                                        <div class="comment-avatar"><img src="imagenes/avatar.png" alt=""></div>
+                                        <!-- Contenedor del Comentario -->
+                                        <div class="comment-box">
+                                            <div class="comment-head">
+                                                <h6 class="comment-name"><a href="perfilUsuario.html">usuario</a></h6>
+                                                <span>hace 10 minutos</span>
+                                            </div>
+                                            <div class="comment-content">
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script src="scripts/navbar.js"></script>
     </body>
 </html>

@@ -30,8 +30,8 @@ body {
 * Lista de Comentarios
 =======================*/
 .comments-container {
-   margin: 60px auto 15px;
-   width: 768px;
+   margin: 40px auto 15px;
+   max-width: 768px;
 }
 
 .comments-container h1 {
@@ -193,13 +193,13 @@ body {
 /** =====================
 * Responsive
 ========================*/
-@media only screen and (max-width: 766px) {
+@media only screen and (max-width: 1350px) {
    .comments-container {
-	   width: 480px;
+	   width: 100%;
    }
 
    .comments-list .comment-box {
-	   width: 390px;
+	   width: calc(100% - 80px);
    }
 }
 
