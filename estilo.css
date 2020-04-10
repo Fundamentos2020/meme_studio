@@ -11,8 +11,6 @@
     padding-bottom: 0px;
 }
 
-
-<<<<<<< HEAD
 /*media queries para hacer el nav responsivo*/
 @media screen and (max-width: 860px){
     nav ul li a{
@@ -84,7 +82,7 @@
     .write-new{
         width: 100%;
     }
-=======
+
 nav{
     overflow: hidden;
     background-color: #c3073f;
@@ -92,7 +90,6 @@ nav{
     height: auto;
     width: 100%;
     vertical-align: center;
->>>>>>> e549666ff2d07a89cfa00164a681b7bae81c815b
 }
 
 nav ul{
@@ -517,13 +514,6 @@ h1{
 }
 
 
-
-<<<<<<< HEAD
-
-
-
-
-
 .comment-section{
     list-style: none;
     max-width: 800px;
@@ -694,7 +684,7 @@ h1{
 
     padding: 10px 25px;
     margin-top: 18px;
-=======
+
 /*media queries para hacer el nav responsivo*/
 @media screen and (max-width: 860px){
     .boton-menu{
@@ -814,5 +804,4 @@ h1{
         font-size: 35px;
         padding: 0 100px;
     }
->>>>>>> e549666ff2d07a89cfa00164a681b7bae81c815b
 }
