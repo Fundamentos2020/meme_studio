@@ -12,6 +12,7 @@
 }
 
 
+<<<<<<< HEAD
 /*media queries para hacer el nav responsivo*/
 @media screen and (max-width: 860px){
     nav ul li a{
@@ -83,57 +84,63 @@
     .write-new{
         width: 100%;
     }
+=======
+nav{
+    overflow: hidden;
+    background-color: #c3073f;
+    min-height: 80px;
+    height: auto;
+    width: 100%;
+    vertical-align: center;
+>>>>>>> e549666ff2d07a89cfa00164a681b7bae81c815b
 }
 
-@media screen and (min-width: 861px) and (max-width: 1099px){
-    nav ul li{
-        margin: 0 1px;
-    }
-
-    nav ul li a{
-        font-size: 14px;
-        padding: 7px 7px;
-    }
-
-    label.logo{
-        font-size: 28px;
-        padding: 0 20px;
-    }
+nav ul{
+    float: right;
+    margin-right: 20px;
 }
 
-@media screen and (min-width: 1100px) and (max-width: 1299px){
-    nav ul li{
-        margin: 0 5px;
-    }
-
-    nav ul li a{
-        font-size: 16px;
-        padding: 7px 11px;
-    }
-    
-    label.logo{
-        font-size: 31px;
-        padding: 0 40px;
-    }
+nav ul li{
+    display: inline-block;
+    line-height: 80px;
 }
 
-@media screen and (min-width: 1300px){
-    nav ul li{
-        margin: 0 10px;
-    }
-
-    nav ul li a{
-        font-size: 17px;
-        padding: 7px 13px;
-    }
-    
-    label.logo{
-        font-size: 35px;
-        padding: 0 100px;
-    }
+nav ul li a{
+    color: #26171B;
+    border-radius: 3px;
+    text-transform: uppercase;
 }
 
 
+nav a.active, nav a:hover{
+    background: #A6A6A6;
+    transition: .5s;
+}
+
+.boton-menu{
+    display: none;
+}
+
+.boton-menu a {
+    font-size: 2.2em;
+    font-weight: bolder;
+}
+
+#search{
+    display: inline-block;
+    width: 75%;
+    text-align: right;
+}
+
+#search input{
+    padding: 0.2em;
+    width: 70px;
+    transition: width 1s;
+}
+
+#search input:focus{
+    width: 180px;
+}
 
 @media(min-width: 0px){
     .col-s-1 {width: 8.33%; }
@@ -206,33 +213,7 @@ body{
     background-color: #97AAbd;
 }
 
-nav{
-    background-color: #c3073f;
-    height: 80px;
-    width: 100%;
-}
 
-nav ul{
-    float: right;
-    margin-right: 20px;
-}
-
-nav ul li{
-    display: inline-block;
-    line-height: 80px;
-}
-
-nav ul li a{
-    color: #26171B;
-    border-radius: 3px;
-    text-transform: uppercase;
-}
-
-
-nav a.active, nav a:hover{
-    background: #A6A6A6;
-    transition: .5s;
-}
 
 .checkbtn{
 font-size: 30px;
@@ -251,22 +232,6 @@ section{
 background: url(bg1.jpg) no-repeat;
 background-size: cover;
 height: calc(100vh - 80px);
-}
-
-#search{
-    display: inline-block;
-    width: 75%;
-    text-align: right;
-}
-
-#search input{
-    padding: 0.2em;
-    width: 70px;
-    transition: width 1s;
-}
-
-#search input:focus{
-    width: 160px;
 }
 
 label.logo{
@@ -405,12 +370,11 @@ label.logo{
     height: 420px;
     background: #000;
     color: #fff;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%,-50%);
+    display: inline-block;
+    position: relative;
     box-sizing: border-box;
     padding: 70px 30px;
+    margin-top: 90px; 
 }
 
 .avatar{
@@ -511,7 +475,9 @@ h1{
 }
 
 .entrada-titulo {
-    width: 24em;
+    width: 95%;
+    max-width: 24em;
+    overflow: hidden;
 }
 
 .entrada-txt {
@@ -552,6 +518,7 @@ h1{
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -727,4 +694,125 @@ h1{
 
     padding: 10px 25px;
     margin-top: 18px;
+=======
+/*media queries para hacer el nav responsivo*/
+@media screen and (max-width: 860px){
+    .boton-menu{
+        display: inline-block;
+    }
+
+    nav ul :not(:last-child){
+        display: none;
+    }
+
+    nav ul li a{
+        font-size: 14px;
+        padding: 7px 13px;
+    }
+
+    label.logo{
+        font-size: 35px;
+        padding: 0 20px;
+    }
+    nav .boton-menu{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    nav ul{
+        width: 100%;
+        display: block;
+        float: left;
+    }
+
+    nav.responsive {position: relative;}
+
+    nav.responsive .logo {
+        display: block;
+    }
+
+    nav.responsive {
+        height: auto;
+    }
+    
+    .topnav.responsive ul :not(.boton-menu){
+        float: none;
+        display: block;
+        text-align: left;
+        height: auto;
+    }
+
+    .topnav.responsive li :not(.boton-menu) {
+        display: block;
+        line-height: 2em;
+        width: 100%;
+    }
+
+    .topnav.responsive #search {
+        display: block;
+        text-align: left;
+        margin: 0.6em;
+    }
+
+    .topnav.responsive #search input{
+        padding: 0.2em;
+        width: 125px;
+        transition: width 1s;
+    }
+    
+    .topnav.responsive #search input:focus{
+        width: 250px;
+    }
+}
+
+
+
+@media screen and (min-width: 861px) and (max-width: 1099px){
+    nav ul li{
+        margin: 0 1px;
+    }
+
+    nav ul li a{
+        font-size: 14px;
+        padding: 7px 7px;
+    }
+
+    label.logo{
+        font-size: 28px;
+        padding: 0 20px;
+    }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1299px){
+    nav ul li{
+        margin: 0 5px;
+    }
+
+    nav ul li a{
+        font-size: 16px;
+        padding: 7px 11px;
+    }
+    
+    label.logo{
+        font-size: 31px;
+        padding: 0 40px;
+    }
+}
+
+@media screen and (min-width: 1300px){
+    nav ul li{
+        margin: 0 10px;
+    }
+
+    nav ul li a{
+        font-size: 17px;
+        padding: 7px 13px;
+    }
+    
+    label.logo{
+        font-size: 35px;
+        padding: 0 100px;
+    }
+>>>>>>> e549666ff2d07a89cfa00164a681b7bae81c815b
 }

@@ -8,16 +8,12 @@
         <link rel="stylesheet" href="estilo.css">
     </head>
     <body>
-        <nav>
-            <input type="checkbox" id="check">
+        <nav class="topnav">
             <label class="logo">MemeStudio</label>
-            <label for="check" class="checkbtn">
-                <i class="fas fa-bars"></i>
-            </label> 
             <ul>
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="populares.html">Populares</a></li>
-                <li><a href="generador.html" target="_blank">Generador</a></li>
+                <li><a href="generador.html">Generador</a></li>
                 <li><a href="moderar.html">Moderar</a></li>
                 <li>
                     <div id="search">
@@ -25,6 +21,7 @@
                     </div>
                 </li>
                 <li><a href="inicio_sesion.html">Usuario</a></li>
+                <li class="boton-menu"><a href="javascript:void(0);" onclick="ajustarNavbar()">&#9776</a></li>
             </ul>
         </nav>
 
@@ -66,4 +63,6 @@
             </div>
         </div>
     </body>
+
+    <script src="scripts/navbar.js"></script>
 </html>
