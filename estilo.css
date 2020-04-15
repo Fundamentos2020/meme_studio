@@ -848,5 +848,5 @@ h1{
 }
 
 #sigsPags {
-    display: flex;
+    justify-content: center;
 }
