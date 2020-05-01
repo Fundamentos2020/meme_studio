@@ -1,17 +1,14 @@
-let MAX = 200;
-let imgpP = 10;
+var MAX = 15;
+let imgpP = 4;
 let pag = 1;
-let nPags = 2;
+var nPags = 0;
 
 function init() {
     pag = 1;
-    nPags = Math.floor(MAX / imgpP);
-
-    setPags();
     getImgs();
 }
 
-function setPags() {
+function setPags(nPags) {
     var pags = document.getElementById("sigsPags");
     pags.innerHTML = "";
 
@@ -50,32 +47,42 @@ function clickSigPag(e) {
 function getImgs() {
     var imagenes = document.getElementById("pubImgs");
     const url = `https://picsum.photos/v2/list?page=${pag}&limit=${imgpP}`;
-    const xh = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
-    xh.open('GET', url, true);
+    xhr.open('GET', "prueba.json", true);
 
-    xh.onload = function() {
+    xhr.onload = function() {
         try {
             if(this.status === 200) {
-                const imgs = JSON.parse(this.responseText) ;
+                const memes = JSON.parse(this.responseText)["memesIndex"]["meme"];
+                let lim = (pag-1)*imgpP, i = 0;
+                if(pag === 1)
+                {
+                    nPags = Math.ceil(memes.length / imgpP);
+                    setPags(nPags);
+                }
 
                 imagenes.innerHTML = " ";
 
-                imgs.forEach(imagen => {
+                memes.forEach(function(meme, index){
+                    if(index < lim || (index >= lim+imgpP))
+                    {
+                        return;
+                    }
                     const addImg = `<div class="p-1 mb-2 col-s-12 col-m-8 offset-m-2 back-white rounded-border">
                                         <div class="row">
                                             <div class="col-s-12 offset-s-0 offset-m-2 col-m-8">
                                                 <div class="pb-1">
-                                                    <h3 class="pb-0p25">Titulo</h3>
-                                                    <p><i>Usuario</i></p>
+                                                    <h3 class="pb-0p25">${meme.titulo}</h3>
+                                                    <p>Creado por <i>${meme.usuario}</i></p>
                                                 </div>
-                                                <div class="pb-1"><img class="meme" src="${imagen.download_url}" /></div>
-                                                <div class="mb-1 tags">Tags: meme, fondo, divertido, slp, random</div>
+                                                <div class="pb-1"><img class="meme" src="${meme.rutaImagenMeme}" alt="meme" /></div>
+                                                <div class="mb-1 tags">Tags: ${meme.tags}</div>
                                                 <div class="mb-1">
                                                     <img class="icono" src="imagenes/pulgar_arriba.png">
-                                                    <label class="pb-1">${getRandomInt(30, 100)}</label>
+                                                    <label class="pb-1">${meme.likes}</label>
                                                     <img class="icono" src="imagenes/pulgar_abajo.png">
-                                                    <label>${getRandomInt(0, 50)}</label>
+                                                    <label>${meme.dislikes}</label>
                                                     <a href="publicacion.html" class="float-right">Comentarios</a>
                                                 </div>
                                             </div>
@@ -84,14 +91,12 @@ function getImgs() {
                     imagenes.innerHTML += addImg;
                 });
             }
-        } catch (e) {
-        }
+        } catch (e) {}
     }
 
     try {
-        xh.send();
-    } catch (e) {
-    }
+        xhr.send();
+    } catch (e) {}
 }
 
 function getRandomInt(min, max) {

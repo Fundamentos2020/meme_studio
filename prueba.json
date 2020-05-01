@@ -1,0 +1,96 @@
+{
+    "memesIndex": {
+      "meme": [
+        {
+          "idMeme": "1",
+          "usuario": "Tom",
+          "rutaImagenMeme": "https://picsum.photos/id/10/1500/1000",
+          "titulo": "La Gran Vida",
+          "tags": "fondo, paisaje",
+          "likes": "30",
+          "dislikes": "10"
+        },
+        {
+          "idMeme": "2",
+          "usuario": "Don Carlos",
+          "rutaImagenMeme": "https://picsum.photos/id/1014/1500/1000",
+          "titulo": "Los ciegos no ven",
+          "tags": "pelicula, birdbox",
+          "likes": "25",
+          "dislikes": "41"
+        },
+        {
+          "idMeme": "3",
+          "usuario": "Sarude Danstorm",
+          "rutaImagenMeme": "https://picsum.photos/id/1023/1500/1000",
+          "titulo": "Allá te voy San Pedro",
+          "tags": "bicicleta, salto",
+          "likes": "70",
+          "dislikes": "22"
+        },
+        {
+          "idMeme": "4",
+          "usuario": "Don Carlos",
+          "rutaImagenMeme": "https://picsum.photos/id/101/1500/1000",
+          "titulo": "Titulo 4",
+          "tags": "casa, arquitectura",
+          "likes": "25",
+          "dislikes": "41"
+        },
+        {
+          "idMeme": "5",
+          "usuario": "Sarude Danstorm",
+          "rutaImagenMeme": "https://picsum.photos/id/23/1500/1000",
+          "titulo": "Titulo 5",
+          "tags": "cubiertos, comida, acercamiento",
+          "likes": "56",
+          "dislikes": "122"
+        },
+        {
+          "idMeme": "6",
+          "usuario": "Don Carlos",
+          "rutaImagenMeme": "https://picsum.photos/id/514/1500/1000",
+          "titulo": "Titulo 6",
+          "tags": "autos, soleado, blanco",
+          "likes": "75",
+          "dislikes": "26"
+        },
+        {
+          "idMeme": "7",
+          "usuario": "NiceGuy",
+          "rutaImagenMeme": "https://picsum.photos/id/523/1500/1000",
+          "titulo": "Titulo 7",
+          "tags": "paisaje, desierto",
+          "likes": "79",
+          "dislikes": "33"
+        },
+        {
+          "idMeme": "8",
+          "usuario": "DanyLocox",
+          "rutaImagenMeme": "https://picsum.photos/id/614/1500/1000",
+          "titulo": "Titulo 8",
+          "tags": "olas, costa, mar, relajacion",
+          "likes": "25",
+          "dislikes": "41"
+        },
+        {
+          "idMeme": "9",
+          "usuario": "Peluca",
+          "rutaImagenMeme": "https://picsum.photos/id/323/1500/1000",
+          "titulo": "Titulo 9",
+          "tags": "paisaje, montañas, vegetacion",
+          "likes": "70",
+          "dislikes": "22"
+        },
+        {
+          "idMeme": "10",
+          "usuario": "Gary",
+          "rutaImagenMeme": "https://picsum.photos/id/104/1500/1000",
+          "titulo": "Titulo 10",
+          "tags": "supersticion, magia",
+          "likes": "137",
+          "dislikes": "98"
+        }
+      ]
+    }
+  }
