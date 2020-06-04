@@ -16,7 +16,7 @@
             $this->setFechaSolicitud($fechaSolicitud);
         }
 
-        
+
         public function getID() {
             return $this->_id;
         }
@@ -54,7 +54,7 @@
         }
 
         public function setEstatusModeracion($estatusMod) {
-            if (strtoupper($rolUsuario) !== 'ACEPTADO' && strtoupper($rolUsuario) !== 'NEGADO') {
+            if (strtoupper($estatusMod) !== 'ACEPTADO' && strtoupper($estatusMod) !== 'NEGADO') {
                 throw new ModeracionException("Error en estatus de moderación");
             }
             $this->_estatus_moderacion = $estatusMod;
