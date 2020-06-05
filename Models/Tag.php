@@ -26,8 +26,8 @@
         }
     
         public function setNombreTag($nombreTag) {
-            if ($nombreTag !== null && strlen($nombreTag) < 8) {
-                throw new TagException("Error en el nombre completo de usuario");
+            if ($nombreTag !== null && (strlen($nombreTag) < 1 || strlen($nombreTag) > 25)  ) {
+                throw new TagException("Error en el nombre del tag");
             }
             $this->_nombre_tag = $nombreTag;
         }

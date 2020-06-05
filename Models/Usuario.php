@@ -83,7 +83,7 @@
         }
 
         public function setContrasena($contra) {
-            if ($contra !== null && strlen($contra) < 8) {
+            if ($contra !== null && (strlen($contra) < 1 || strlen($contra) > 255)) {
                 throw new UsuarioException("Error en la contraseña de usuario");
             }
             $this->_contrasena = $contra;
@@ -105,13 +105,13 @@
 
         public function setRutaImagenPerfil($rutaPP){
             if ($rutaPP !== null && file_exists($rutaPP)) {
-                throw new UsuarioException("Error en el email de usuario");
+                throw new UsuarioException("Error en la imagen de usuario");
             }
             $this->_ruta_imagen_perfil = $rutaPP;
         }
 
         public function setDescripcion($descrip){
-            if ($descrip !== null && strlen($descrip) > 300) {
+            if ($descrip !== null && strlen($descrip) > 500) {
                 throw new UsuarioException("Error en descripción de usuario");
             }
             $this->_descripcion = $descrip;

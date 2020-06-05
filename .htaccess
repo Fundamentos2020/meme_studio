@@ -14,3 +14,11 @@ RewriteRule ^usuarios$ Controllers/usuariosController.php [L]
 #Sesiones
 RewriteRule ^sesiones$ Controllers/sesionesController.php [L]
 RewriteRule ^sesiones/([0-9]+)$ Controllers/sesionesController.php?id_sesion=$1 [L]
+
+
+#Memes
+RewriteRule ^memes$ Controllers/memesController.php? [L]
+RewriteRule ^memes/tag=(.*)$ Controllers/memesController.php?tag=$1 [L]
+RewriteRule ^memes/populares=(.*)$ Controllers/memesController.php?populares=$1 [L]
+RewriteRule ^memes/usuario_id=([0-9]+)$ Controllers/memesController.php?usuario_id=$1 [L]
+RewriteRule ^memes/usuario_id=([0-9]+)/meme_id=([0-9]+)$ Controllers/memesController.php?usuario_id=$1&meme_id=$2 [L]

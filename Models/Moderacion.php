@@ -54,14 +54,14 @@
         }
 
         public function setEstatusModeracion($estatusMod) {
-            if (strtoupper($estatusMod) !== 'ACEPTADO' && strtoupper($estatusMod) !== 'NEGADO') {
+            if (strtoupper($estatusMod) !== 'ACEPTADO' && strtoupper($estatusMod) !== 'RECHAZADO' && strtoupper($estatusMod) !== 'PENDIETE') {
                 throw new ModeracionException("Error en estatus de moderación");
             }
             $this->_estatus_moderacion = $estatusMod;
         }
 
         public function setRetroalimentacion($retroalimentacion) {
-            if ($retroalimentacion !== null && strlen($retroalimentacion) > 300 || strlen($retroalimentacion) < 15) {
+            if ($retroalimentacion !== null && strlen($retroalimentacion) > 250 || strlen($retroalimentacion) < 1) {
                 throw new ModeracionException("Error en retroalimentación de moderación");
             }
             $this->_retroalimentacion = $retroalimentacion;
