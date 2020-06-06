@@ -102,7 +102,7 @@ class Meme {
 
     public function setDislikes($dislikes) {
         if ($dislikes !== null && (!is_numeric($dislikes) || $dislikes < 0 ||  $dislikes >= 2147483647)) {
-            throw new MemeException("Error en likes del meme");
+            throw new MemeException("Error en dislikes del meme");
         }
         $this->_dislikes = $dislikes;
     }
