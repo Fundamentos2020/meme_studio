@@ -54,7 +54,7 @@
         }
 
         public function setEstatusModeracion($estatusMod) {
-            if (strtoupper($estatusMod) !== 'ACEPTADO' && strtoupper($estatusMod) !== 'RECHAZADO' && strtoupper($estatusMod) !== 'PENDIETE') {
+            if (strtoupper($estatusMod) !== 'ACEPTADO' && strtoupper($estatusMod) !== 'RECHAZADO' && strtoupper($estatusMod) !== 'PENDIENTE') {
                 throw new ModeracionException("Error en estatus de moderación");
             }
             $this->_estatus_moderacion = $estatusMod;

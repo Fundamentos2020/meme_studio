@@ -1,6 +1,7 @@
 <?php 
 
 require_once('../Models/DB.php');
+require_once('../Models/Usuario.php');
 require_once('../Models/Response.php');
 
 try {
