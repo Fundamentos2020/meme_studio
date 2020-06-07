@@ -54,7 +54,6 @@ if(array_key_exists("populares", $_GET)){
             if($rangoTiempo === 'mensual')
                 $sql .= ' AND DATEDIFF(CURDATE(), DATE(fecha_publicacion)) <= 30';
             $sql .= ' ORDER BY likes DESC';
-            //var_dump($sql);
 
             $query = $connection->prepare($sql);
             $query->execute();
