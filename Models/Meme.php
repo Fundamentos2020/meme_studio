@@ -165,7 +165,7 @@ class Meme {
     public function getArray() {
         $meme = array();
 
-        $meme['id'] = $this->getID();
+        $meme['meme_id'] = $this->getID();
         $meme['usuario_id'] = $this->getUsuarioID();
         $meme['likes'] = $this->getLikes();
         $meme['dislikes'] = $this->getDislikes();

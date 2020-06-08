@@ -42,7 +42,7 @@ if(array_key_exists("populares", $_GET)){
         }
 
         try {
-            $sql = 'SELECT id, usuario_id, likes, dislikes, estado_meme, ruta_imagen_meme, titulo, 
+            $sql = 'SELECT meme_id, usuario_id, likes, dislikes, estado_meme, ruta_imagen_meme, titulo, 
                         texto_superior, texto_inferior, 
                         DATE_FORMAT(fecha_creacion, "%Y-%m-%d %H:%i") fecha_creacion,
                         DATE_FORMAT(fecha_publicacion, "%Y-%m-%d %H:%i") fecha_publicacion
@@ -62,7 +62,7 @@ if(array_key_exists("populares", $_GET)){
             $memes = array();
             
             while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $meme = new Meme($row['id'], $row['usuario_id'], $row['likes'], $row['dislikes'], 
+                $meme = new Meme($row['meme_id'], $row['usuario_id'], $row['likes'], $row['dislikes'], 
                         $row['estado_meme'], $row['ruta_imagen_meme'], $row['titulo'], 
                         $row['texto_superior'], $row['texto_inferior'], $row['fecha_creacion'], 
                         $row['fecha_publicacion']);
@@ -204,12 +204,12 @@ else if(array_key_exists("tag", $_GET)){
         }
 
         try {
-            $sql = 'SELECT memes.id, usuario_id, likes, dislikes, estado_meme, ruta_imagen_meme, titulo, 
+            $sql = 'SELECT memes.meme_id, usuario_id, likes, dislikes, estado_meme, ruta_imagen_meme, titulo, 
                         texto_superior, texto_inferior, 
                         DATE_FORMAT(fecha_creacion, "%Y-%m-%d %H:%i") fecha_creacion,
                         DATE_FORMAT(fecha_publicacion, "%Y-%m-%d %H:%i") fecha_publicacion
                         FROM memes INNER JOIN memes_tags INNER JOIN tags 
-                        WHERE memes.estado_meme = \'ACEPTADO\' AND memes.id = memes_tags.meme_id AND memes_tags.tag_id = tags.tag_id 
+                        WHERE memes.estado_meme = \'ACEPTADO\' AND memes.meme_id = memes_tags.meme_id AND memes_tags.tag_id = tags.tag_id 
                         AND tags.nombre_tag = :nombre_tag ORDER BY fecha_publicacion DESC';
             $query = $connection->prepare($sql);
             $query->bindParam(':nombre_tag', $nombre_tag, PDO::PARAM_INT);
@@ -273,7 +273,7 @@ else if(empty($_GET)){
     // host/memes/
     if($_SERVER['REQUEST_METHOD'] === 'GET'){
         try {
-            $sql = 'SELECT id, usuario_id, likes, dislikes, estado_meme, ruta_imagen_meme, titulo, 
+            $sql = 'SELECT meme_id, usuario_id, likes, dislikes, estado_meme, ruta_imagen_meme, titulo, 
                         texto_superior, texto_inferior, 
                         DATE_FORMAT(fecha_creacion, "%Y-%m-%d %H:%i") fecha_creacion,
                         DATE_FORMAT(fecha_publicacion, "%Y-%m-%d %H:%i") fecha_publicacion

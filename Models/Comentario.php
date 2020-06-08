@@ -2,14 +2,14 @@
     class ComentarioException extends Exception {}
 
     class Comentario {
-        private $_id;
+        private $_comentario_id;
         private $_usuario_id;
         private $_meme_id;
         private $_contenido;
         private $_fecha_comentario;
 
-        public function __construct($id, $usuario_id, $meme_id, $contenido, $fecha_comentario){
-            $this->setID($id);
+        public function __construct($comentario_id, $usuario_id, $meme_id, $contenido, $fecha_comentario){
+            $this->setID($comentario_id);
             $this->setUsuarioID($usuario_id);
             $this->setMemeID($meme_id);
             $this->setContenido($contenido);
@@ -17,7 +17,7 @@
         }
 
         public function getID(){
-            return $this->_id;
+            return $this->_comentario_id;
         }
 
         public function getUsuarioID(){
@@ -42,7 +42,7 @@
             if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_id !== null)) {
                 throw new ComentarioException("Error en ID del Comentario");
             }
-            $this->_id = $id;
+            $this->_comentario_id = $id;
         }
 
         public function setUsuarioID($usuario_id){
@@ -76,7 +76,7 @@
         public function getArray() {
             $comentario = array();
 
-            $comentario['id'] = $this->getID();
+            $comentario['comentario_id'] = $this->getID();
             $comentario['usuario_id'] = $this->getUsuarioID();
             $comentario['meme_id'] = $this->getMemeID();
             $comentario['contenido'] = $this->getContenido();

@@ -35,7 +35,7 @@ if(array_key_exists("meme_id", $_GET)){
 
 
         try {
-            $sql = 'SELECT id, usuario_id, meme_id, contenido,
+            $sql = 'SELECT comentario_id, usuario_id, meme_id, contenido,
                         DATE_FORMAT(fecha_comentario, "%Y-%m-%d %H:%i") fecha_comentario
                     FROM comentarios WHERE meme_id = :meme_id ORDER BY fecha_comentario DESC';
 
@@ -48,7 +48,7 @@ if(array_key_exists("meme_id", $_GET)){
             $comentarios = array();
             
             while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $comentario = new Comentario($row['id'], $row['usuario_id'], $row['meme_id'], $row['contenido'], $row['fecha_comentario']);
+                $comentario = new Comentario($row['id_comentario'], $row['usuario_id'], $row['meme_id'], $row['contenido'], $row['fecha_comentario']);
 
                 $comentarios[] = $comentario->getArray();
             }
@@ -165,12 +165,12 @@ else if (empty($_GET)) {
 
             $ultimo_ID = $connection->lastInsertId();
 
-            $sql = 'SELECT id, usuario_id, meme_id, contenido,
+            $sql = 'SELECT comentario_id, usuario_id, meme_id, contenido,
                         DATE_FORMAT(fecha_comentario, "%Y-%m-%d %H:%i") fecha_comentario
-                    FROM comentarios WHERE id = :id';
+                    FROM comentarios WHERE id_comentario = :comentario_id';
 
             $query = $connection->prepare($sql);
-            $query->bindParam(':id', $ultimo_ID, PDO::PARAM_INT);
+            $query->bindParam(':comentario_id', $ultimo_ID, PDO::PARAM_INT);
             $query->execute();
 
             if ($rowCount === 0) {
@@ -185,7 +185,7 @@ else if (empty($_GET)) {
             $comentarios = array();
                 
             while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $comentario = new Comentario($row['id'], $row['usuario_id'], $row['meme_id'], $row['contenido'], $row['fecha_comentario']);
+                $comentario = new Comentario($row['comentario_id'], $row['usuario_id'], $row['meme_id'], $row['contenido'], $row['fecha_comentario']);
 
                 $comentarios[] = $comentario->getArray();
             }
