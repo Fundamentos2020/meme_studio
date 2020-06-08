@@ -17,13 +17,15 @@
         exit();
     }
 
-    //GET host/tag
+    //GET host/tags
     if(empty($_GET)){
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
             try {
-                $query = $connection->prepare('SELECT * FROM tag');
+                $query = $connection->prepare('SELECT * FROM tags');
                 $query->execute();
                 $tags = array();
+
+                $rowCount = $query->rowCount();
 
                 while($row = $query->fetch(PDO::FETCH_ASSOC)) {
                     $tag = new Tag($row['id'], $row['nombre_tag']);
@@ -89,7 +91,7 @@
                     $response = new Response();
                     $response->setHttpStatusCode(400);
                     $response->setSuccess(false);
-                    (!isset($json_data->nombre_tag) ? $response->addMessage('El tag es obligatorio') : false);
+                    $response->addMessage('El nombre del tag es obligatorio');
                     $response->send();
                     exit();
                 }
@@ -99,10 +101,10 @@
                     $json_data->nombre_tag,
                 );
     
-                $nombreTag = $tag->getNombreTag();
+                $nombre_tag = $tag->getNombreTag();
     
-                $query = $connection->prepare('INSERT INTO tag (nombre_tag) VALUES (:nombre_tag)');
-                $query->bindParam(':nombre_tag', $titulo, PDO::PARAM_STR);
+                $query = $connection->prepare('INSERT INTO tags (nombre_tag) VALUES (:nombre_tag)');
+                $query->bindParam(':nombre_tag', $nombre_tag, PDO::PARAM_STR);
                 $query->execute();
     
                 $rowCount = $query->rowCount();
@@ -118,7 +120,7 @@
     
                 $ultimo_ID = $connection->lastInsertId();
     
-                $query = $connection->prepare('SELECT id, nombre_tag FROM tag WHERE id = :id AND nombre_tag = :nombre_tag');
+                $query = $connection->prepare('SELECT id, nombre_tag FROM tags WHERE id = :id');
                 $query->bindParam(':id', $ultimo_ID, PDO::PARAM_INT);
                 $query->execute();
     
@@ -128,7 +130,7 @@
                     $response = new Response();
                     $response->setHttpStatusCode(500);
                     $response->setSuccess(false);
-                    $response->addMessage("Error al obtener tarea después de crearla");
+                    $response->addMessage("Error al obtener tag después de crearlo");
                     $response->send();
                     exit();
                 }
@@ -148,7 +150,7 @@
                 $response = new Response();
                 $response->setHttpStatusCode(201);
                 $response->setSuccess(true);
-                $response->addMessage("Tags creado");
+                $response->addMessage("Tag creado");
                 $response->setData($returnData);
                 $response->send();
                 exit();
@@ -167,7 +169,7 @@
                 $response = new Response();
                 $response->setHttpStatusCode(500);
                 $response->setSuccess(false);
-                $response->addMessage("Error en creación de tareas");
+                $response->addMessage("Error en creación de tags");
                 $response->send();
                 exit();
             }

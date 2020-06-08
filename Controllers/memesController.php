@@ -181,8 +181,10 @@ else if(array_key_exists("usuario_id", $_GET)){
         }
     }
 
+    // PATCH
     // host/memes/usuario_id={id}/meme_id={id}
 
+    // DELETE
     // host/memes/usuario_id={id}/meme_id={id}
 }
 else if(array_key_exists("tag", $_GET)){
@@ -266,8 +268,8 @@ else if(array_key_exists("tag", $_GET)){
         exit();
     }
 }
-else{
-    // GET
+else if(empty($_GET)){
+    // Devuelve todos los memes en orden de publicacion (primero el más reciente)
     // host/memes/
     if($_SERVER['REQUEST_METHOD'] === 'GET'){
         try {
@@ -322,6 +324,9 @@ else{
             exit();
         }
     }
+    else if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        
+    }
     else{
         $response = new Response();
         $response->setHttpStatusCode(405);
@@ -331,13 +336,14 @@ else{
         exit();
     }
 }
-
-
-
-
-
-
-
+else {
+    $response = new Response();
+    $response->setHttpStatusCode(404);
+    $response->setSuccess(false);
+    $response->addMessage("Ruta no encontrada");
+    $response->send();
+    exit();
+}
 
 
 ?>

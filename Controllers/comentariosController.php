@@ -232,5 +232,13 @@ else if (empty($_GET)) {
         exit();
     }
 }
+else {
+    $response = new Response();
+    $response->setHttpStatusCode(404);
+    $response->setSuccess(false);
+    $response->addMessage("Ruta no encontrada");
+    $response->send();
+    exit();
+}
 
 ?>

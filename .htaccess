@@ -27,3 +27,10 @@ RewriteRule ^memes/usuario_id=([0-9]+)/meme_id=([0-9]+)$ Controllers/memesContro
 #Comentarios
 RewriteRule ^comentarios$ Controllers/comentariosController.php? [L]
 RewriteRule ^comentarios/meme_id=([0-9]+)$ Controllers/comentariosController.php?meme_id=$1 [L]
+
+#Tags
+RewriteRule ^tags$ Controllers/tagsController.php? [L]
+
+#Memes_tags
+RewriteRule ^memes_tags$ Controllers/memesTagsController.php? [L]
+RewriteRule ^memes_tags/meme_id=([0-9]+)$ Controllers/memesTagsController.php?meme_id=$1 [L]
