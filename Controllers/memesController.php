@@ -209,7 +209,7 @@ else if(array_key_exists("tag", $_GET)){
                         DATE_FORMAT(fecha_creacion, "%Y-%m-%d %H:%i") fecha_creacion,
                         DATE_FORMAT(fecha_publicacion, "%Y-%m-%d %H:%i") fecha_publicacion
                         FROM memes INNER JOIN memes_tags INNER JOIN tags 
-                        WHERE memes.estado_meme = \'ACEPTADO\' AND memes.id = memes_tags.meme_id AND memes_tags.tag_id = tags.id 
+                        WHERE memes.estado_meme = \'ACEPTADO\' AND memes.id = memes_tags.meme_id AND memes_tags.tag_id = tags.tag_id 
                         AND tags.nombre_tag = :nombre_tag ORDER BY fecha_publicacion DESC';
             $query = $connection->prepare($sql);
             $query->bindParam(':nombre_tag', $nombre_tag, PDO::PARAM_INT);

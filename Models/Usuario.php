@@ -2,7 +2,7 @@
     class UsuarioException extends Exception {}
 
     class Usuario {
-        private $_id;
+        private $_usuario_id;
         private $_nombre_completo;
         private $_nombre_usuario;
         private $_contrasena;
@@ -26,7 +26,7 @@
 
 
         public function getID() {
-            return $this->_id;
+            return $this->_usuario_id;
         }
     
         public function getNombreCompleto() {
@@ -62,10 +62,10 @@
 
 
         public function setID($id) {
-            if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_id !== null)) {
+            if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_usuario_id !== null)) {
                 throw new UsuarioException("Error en ID de usuario");
             }
-            $this->_id = $id;
+            $this->_usuario_id = $id;
         }
     
         public function setNombreCompleto($nombreCompleto) {
@@ -121,7 +121,7 @@
         public function getArray() {
             $usuario = array();
     
-            $usuario['id'] = $this->getID();
+            $usuario['usuario_id'] = $this->getID();
             $usuario['nombre_completo'] = $this->getNombreCompleto();
             $usuario['nombre_usuario'] = $this->getNombreUsuario();
             $usuario['contrasena'] = $this->getContrasena();

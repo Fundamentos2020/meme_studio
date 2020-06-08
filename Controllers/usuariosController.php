@@ -65,7 +65,7 @@ $nombre_usuario = trim($json_data->nombre_usuario);
 $contrasena = $json_data->contrasena;
 
 try {
-    $query = $connection->prepare('SELECT id FROM usuarios WHERE nombre_usuario = :nombre_usuario');
+    $query = $connection->prepare('SELECT usuario_id FROM usuarios WHERE nombre_usuario = :nombre_usuario');
     $query->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
     $query->execute();
 
@@ -102,7 +102,7 @@ try {
     $ultimoID = $connection->lastInsertId();
 
     $returnData = array();
-    $returnData['id_usuario'] = $ultimoID;
+    $returnData['usuario_id'] = $ultimoID;
     $returnData['nombre_completo'] = $nombre_completo;
     $returnData['nombre_usuario'] = $nombre_usuario;
 

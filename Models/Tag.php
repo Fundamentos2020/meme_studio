@@ -2,7 +2,7 @@
     class TagException extends Exception {}
 
     class Tag {
-        private $_id;
+        private $_tag_id;
         private $_nombre_tag;
 
         public function __construct($id, $nombreTag){
@@ -11,7 +11,7 @@
         }
 
         public function getID() {
-            return $this->_id;
+            return $this->_tag_id;
         }
     
         public function getNombreTag() {
@@ -19,10 +19,10 @@
         }
 
         public function setID($id) {
-            if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_id !== null)) {
+            if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_tag_id !== null)) {
                 throw new TagException("Error en ID de tag");
             }
-            $this->_id = $id;
+            $this->_tag_id = $id;
         }
     
         public function setNombreTag($nombreTag) {
@@ -35,7 +35,7 @@
         public function getArray() {
             $tag = array();
     
-            $tag['id'] = $this->getID();
+            $tag['tag_id'] = $this->getID();
             $tag['nombre_tag'] = $this->getNombreTag();
     
             return $tag;
