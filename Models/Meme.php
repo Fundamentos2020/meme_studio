@@ -83,7 +83,7 @@ class Meme {
         if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_id !== null)) {
             throw new MemeException("Error en ID del meme");
         }
-        $this->_id;
+        $this->_id = $id;
     }
 
     public function setUsuarioID($usuario_id) {
