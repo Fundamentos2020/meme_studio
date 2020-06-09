@@ -23,7 +23,7 @@ RewriteRule ^memes$ Controllers/memesController.php? [L]
 RewriteRule ^memes/tag=(.*)$ Controllers/memesController.php?tag=$1 [L]
 RewriteRule ^memes/populares=(.*)$ Controllers/memesController.php?populares=$1 [L]
 RewriteRule ^memes/usuario_id=([0-9]+)$ Controllers/memesController.php?usuario_id=$1 [L]
-RewriteRule ^memes/usuario_id=([0-9]+)/meme_id=([0-9]+)$ Controllers/memesController.php?usuario_id=$1&meme_id=$2 [L]
+RewriteRule ^memes/meme_id=([0-9]+)$ Controllers/memesController.php?meme_id=$1 [L]
 
 
 #Comentarios
