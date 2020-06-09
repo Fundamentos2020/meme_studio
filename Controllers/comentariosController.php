@@ -218,7 +218,7 @@ else if (empty($_GET)) {
             $response = new Response();
             $response->setHttpStatusCode(500);
             $response->setSuccess(false);
-            $response->addMessage("Error en creación de tareas");
+            $response->addMessage("Error en creación de comentarios");
             $response->send();
             exit();
         }

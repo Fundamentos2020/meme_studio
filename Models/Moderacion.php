@@ -2,7 +2,7 @@
     class ModeracionException extends Exception {}
 
     class Moderacion {
-        private $id;
+        private $_moderacion_id;
         private $_meme_id;
         private $_estatus_moderacion;
         private $_retroalimentacion;
@@ -18,7 +18,7 @@
 
 
         public function getID() {
-            return $this->_id;
+            return $this->_moderacion_id;
         }
     
         public function getMemeID() {
@@ -40,10 +40,10 @@
 
 
         public function setID($id) {
-            if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_id !== null)) {
+            if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_moderacion_id !== null)) {
                 throw new ModeracionException("Error en ID de moderación");
             }
-            $this->_id = $id;
+            $this->_moderacion_id = $id;
         }
     
         public function setMemeID($memeId) {
