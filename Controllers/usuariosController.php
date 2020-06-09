@@ -82,7 +82,7 @@ try {
 
     $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
-    $query = $connection->prepare('INSERT INTO usuarios(nombre_completo, nombre_usuario, contrasena) VALUES(:nombre_completo, :nombre_usuario, :contrasena)');
+    $query = $connection->prepare('INSERT INTO usuarios (nombre_completo, nombre_usuario, contrasena) VALUES (:nombre_completo, :nombre_usuario, :contrasena)');
     $query->bindParam(':nombre_completo', $nombre_completo, PDO::PARAM_STR);
     $query->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
     $query->bindParam(':contrasena', $contrasena_hash, PDO::PARAM_STR);

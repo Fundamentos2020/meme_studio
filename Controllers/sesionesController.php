@@ -45,7 +45,7 @@ if (array_key_exists('id_sesion', $_GET)) {
 
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         try {
-            $query = $connection->prepare('DELETE FROM sesiones WHERE id = :id AND token_acceso = :token_acceso');
+            $query = $connection->prepare('DELETE FROM sesiones WHERE id_sesion = :id AND token_acceso = :token_acceso');
             $query->bindParam(':id', $id_sesion, PDO::PARAM_INT);
             $query->bindParam(':token_acceso', $accesstoken, PDO::PARAM_STR);
             $query->execute();
@@ -119,7 +119,7 @@ if (array_key_exists('id_sesion', $_GET)) {
         try{
             $token_actualizacion = $jsonData->token_actualizacion;
 
-            $query = $connection->prepare('SELECT sesiones.id AS id_sesion, sesiones.id_usuario, activo, token_acceso, token_actualizacion, caducidad_token_acceso, caducidad_token_actualizacion FROM sesiones, usuarios WHERE sesiones.id_usuario = usuarios.id AND sesiones.id = :id_sesion AND sesiones.token_acceso = :token_acceso AND token_actualizacion = :token_actualizacion');
+            $query = $connection->prepare('SELECT sesiones.id_sesion AS id_sesion, sesiones.id_usuario, activo, token_acceso, token_actualizacion, caducidad_token_acceso, caducidad_token_actualizacion FROM sesiones, usuarios WHERE sesiones.id_usuario = usuarios.id AND sesiones.id = :id_sesion AND sesiones.token_acceso = :token_acceso AND token_actualizacion = :token_actualizacion');
             $query->bindParam(':id_sesion', $id_sesion, PDO::PARAM_INT);
             $query->bindParam(':token_acceso', $accesstoken, PDO::PARAM_STR);
             $query->bindParam(':token_actualizacion', $token_actualizacion, PDO::PARAM_STR);
@@ -172,7 +172,7 @@ if (array_key_exists('id_sesion', $_GET)) {
             $caducidad_tacceso_s = 1200;
             $caducidad_tactualizacion_s = 1296000;
 
-            $query = $connection->prepare('UPDATE sesiones SET token_acceso = :token_acceso, caducidad_token_acceso = DATE_ADD(NOW(), INTERVAL :caducidad_tacceso_s SECOND), token_actualizacion = :token_actualizacion, caducidad_token_actualizacion = DATE_ADD(NOW(), INTERVAL :caducidad_tactualizacion_s SECOND) WHERE id = :id_sesion AND id_usuario = :id_usuario AND token_acceso = :consulta_tokenAcceso AND token_actualizacion = :consulta_tokenActualizacion');
+            $query = $connection->prepare('UPDATE sesiones SET token_acceso = :token_acceso, caducidad_token_acceso = DATE_ADD(NOW(), INTERVAL :caducidad_tacceso_s SECOND), token_actualizacion = :token_actualizacion, caducidad_token_actualizacion = DATE_ADD(NOW(), INTERVAL :caducidad_tactualizacion_s SECOND) WHERE id_sesion = :id_sesion AND id_usuario = :id_usuario AND token_acceso = :consulta_tokenAcceso AND token_actualizacion = :consulta_tokenActualizacion');
             $query->bindParam(':token_acceso', $token_acceso, PDO::PARAM_STR);
             $query->bindParam(':caducidad_tacceso_s', $caducidad_tacceso_s, PDO::PARAM_INT);
             $query->bindParam(':token_actualizacion', $token_actualizacion, PDO::PARAM_STR);
@@ -276,7 +276,7 @@ elseif (empty($_GET)) {
         $nombre_usuario = $jsonData->nombre_usuario;
         $contrasena = $jsonData->contrasena;
     
-        $query = $connection->prepare('SELECT id, nombre_completo, contrasena, activo FROM usuarios WHERE nombre_usuario = :nombre_usuario');
+        $query = $connection->prepare('SELECT id_usuario, nombre_completo, contrasena, activo FROM usuarios WHERE nombre_usuario = :nombre_usuario');
         $query->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
         $query->execute();
 
@@ -293,7 +293,7 @@ elseif (empty($_GET)) {
 
         $row = $query->fetch(PDO::FETCH_ASSOC);
 
-        $consulta_id = $row['id'];
+        $consulta_id = $row['id_usuario'];
         $consulta_nombreCompleto = $row['nombre_completo'];
         $consulta_contasena = $row['contrasena'];
         $consulta_activo = $row['activo'];

@@ -127,7 +127,7 @@ else if(array_key_exists("usuario_id", $_GET)){
 
 
         try {
-            $sql = 'SELECT id, usuario_id, likes, dislikes, estado_meme, ruta_imagen_meme, titulo, 
+            $sql = 'SELECT meme_id, usuario_id, likes, dislikes, estado_meme, ruta_imagen_meme, titulo, 
                         texto_superior, texto_inferior, 
                         DATE_FORMAT(fecha_creacion, "%Y-%m-%d %H:%i") fecha_creacion,
                         DATE_FORMAT(fecha_publicacion, "%Y-%m-%d %H:%i") fecha_publicacion
@@ -141,7 +141,7 @@ else if(array_key_exists("usuario_id", $_GET)){
             $memes = array();
             
             while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $meme = new Meme($row['id'], $row['usuario_id'], $row['likes'], $row['dislikes'], 
+                $meme = new Meme($row['meme_id'], $row['usuario_id'], $row['likes'], $row['dislikes'], 
                         $row['estado_meme'], $row['ruta_imagen_meme'], $row['titulo'], 
                         $row['texto_superior'], $row['texto_inferior'], $row['fecha_creacion'], 
                         $row['fecha_publicacion']);
@@ -220,7 +220,7 @@ else if(array_key_exists("tag", $_GET)){
             $memes = array();
             
             while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $meme = new Meme($row['id'], $row['usuario_id'], $row['likes'], $row['dislikes'], 
+                $meme = new Meme($row['meme_id'], $row['usuario_id'], $row['likes'], $row['dislikes'], 
                         $row['estado_meme'], $row['ruta_imagen_meme'], $row['titulo'], 
                         $row['texto_superior'], $row['texto_inferior'], $row['fecha_creacion'], 
                         $row['fecha_publicacion']);
@@ -285,7 +285,7 @@ else if(empty($_GET)){
             $memes = array();
             
             while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $meme = new Meme($row['id'], $row['usuario_id'], $row['likes'], $row['dislikes'], 
+                $meme = new Meme($row['meme_id'], $row['usuario_id'], $row['likes'], $row['dislikes'], 
                         $row['estado_meme'], $row['ruta_imagen_meme'], $row['titulo'], 
                         $row['texto_superior'], $row['texto_inferior'], $row['fecha_creacion'], 
                         $row['fecha_publicacion']);

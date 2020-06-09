@@ -2,14 +2,14 @@
     class ModeracionException extends Exception {}
 
     class Moderacion {
-        private $_id;
+        private $id;
         private $_meme_id;
         private $_estatus_moderacion;
         private $_retroalimentacion;
         private $_fecha_solicitud;
 
-        public function __construct($id, $memeId, $estatusMod, $retroalimentacion, $fechaSolicitud){
-            $this->setID($id);
+        public function __construct($moderacion_id, $memeId, $estatusMod, $retroalimentacion, $fechaSolicitud){
+            $this->setID($moderacion_id);
             $this->setMemeID($memeId);
             $this->setEstatusModeracion($estatusMod);
             $this->setRetroalimentacion($retroalimentacion);
@@ -77,7 +77,7 @@
         public function getArray() {
             $moderacion = array();
     
-            $moderacion['id'] = $this->getID();
+            $moderacion['moderacion_id'] = $this->getID();
             $moderacion['meme_id'] = $this->getMemeID();
             $moderacion['estatus_moderacion'] = $this->getEstatusModeracion();
             $moderacion['retroalimentacion'] = $this->getRetroalimentacion();
