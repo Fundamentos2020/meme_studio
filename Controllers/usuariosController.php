@@ -47,12 +47,13 @@ if (!$json_data = json_decode($postData)) {
     exit();
 }
 
-if (!isset($json_data->nombre_completo) || !isset($json_data->nombre_usuario) || !isset($json_data->contrasena)) {
+if (!isset($json_data->nombre_completo) || !isset($json_data->nombre_usuario)  || !isset($json_data->email) || !isset($json_data->contrasena)) {
     $response = new Response();
     $response->setHttpStatusCode(400);
     $response->setSuccess(false);
     (!isset($json_data->nombre_completo) ? $response->addMessage("El nombre completo es obligatorio") : false);
     (!isset($json_data->nombre_usuario) ? $response->addMessage("El nombre de usuario es obligatorio") : false);
+    (!isset($json_data->email) ? $response->addMessage("El email es obligatorio") : false);
     (!isset($json_data->contrasena) ? $response->addMessage("La contraseña es obligatoria") : false);
     $response->send();
     exit();
@@ -62,6 +63,7 @@ if (!isset($json_data->nombre_completo) || !isset($json_data->nombre_usuario) ||
 
 $nombre_completo = trim($json_data->nombre_completo);
 $nombre_usuario = trim($json_data->nombre_usuario);
+$email = trim($json_data->email);
 $contrasena = $json_data->contrasena;
 
 try {
@@ -82,9 +84,10 @@ try {
 
     $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
-    $query = $connection->prepare('INSERT INTO usuarios (nombre_completo, nombre_usuario, contrasena) VALUES (:nombre_completo, :nombre_usuario, :contrasena)');
+    $query = $connection->prepare('INSERT INTO usuarios (nombre_completo, nombre_usuario, email, contrasena) VALUES (:nombre_completo, :nombre_usuario, :email, :contrasena)');
     $query->bindParam(':nombre_completo', $nombre_completo, PDO::PARAM_STR);
     $query->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
+    $query->bindParam(':email', $email, PDO::PARAM_STR);
     $query->bindParam(':contrasena', $contrasena_hash, PDO::PARAM_STR);
     $query->execute();
 
