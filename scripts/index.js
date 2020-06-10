@@ -49,7 +49,7 @@ function clickSigPag(e) {
 function obtenerMemes() {
     var xhr =  new XMLHttpRequest();
 
-    xhr.open("GET", API + "memes/populares=diario", true);
+    xhr.open("GET", API + "memes", true);
 
     xhr.onload = function() {
         var responseText = JSON.parse(this.responseText);
@@ -67,6 +67,7 @@ function obtenerMemes() {
                 }
 
                 contenedorMemes.innerHTML = " ";
+                console.log(memes.tags);
 
                 memes.forEach(function(meme, index){
                     if(index < lim || (index >= lim+memesPorPagina))

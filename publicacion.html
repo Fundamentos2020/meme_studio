@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="estilo.css">
         <link rel="stylesheet" href="comentarios.css">
     </head>
-    <body>
+    <body onload="init();">
         <nav class="topnav">
             <label class="logo">MemeStudio</label>
             <ul>
@@ -31,18 +31,7 @@
                 <!-- Seccion meme -->
                 <div class="row bb py-1">
                     <div class="col-s-12 offset-s-0 offset-m-2 col-m-8">
-                        <div class="pb-1">
-                            <h3 class="pb-0p25">Titulo</h3>
-                            <p><i>Usuario</i></p>
-                        </div>
-                        <div class="pb-1"><img class="meme" src="https://picsum.photos/800/600" /></div>
-                        <div class="mb-1 tags">Tags: meme, fondo, divertido, slp, random</div>
-                        <div class="mb-1">
-                            <img class="icono" src="imagenes/pulgar_arriba.png">
-                            <label class="pb-1">12</label>
-                            <img class="icono" src="imagenes/pulgar_abajo.png">
-                            <label>5</label>
-                        </div>
+                        <div id="contenedor-meme"></div>
                     </div>
                 </div>
 
@@ -57,16 +46,14 @@
                                 </div>
 
                                 <div class="col-s-12">
-                                    <input class="entrada" type="button" value="Enviar">
+                                    <input class="entrada" type="submit" value="Enviar">
                                 </div>
                             </div>
                             
                             <ul id="comments-list" class="comments-list col-s-12">
-                                <li>
+                                <!-- <li>
                                     <div>
-                                        <!-- Avatar -->
-                                        <div class="comment-avatar"><img src="imagenes/avatar.png" alt=""></div>
-                                        <!-- Contenedor del Comentario -->
+                                        <div class="comment-avatar"><img src="imagenes/avatar.png" alt="imagen_perfil"></div>
                                         <div class="comment-box">
                                             <div class="comment-head">
                                                 <h6 class="comment-name"><a href="perfilUsuario.html">usuario</a></h6>
@@ -77,24 +64,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
-
-                                <li>
-                                    <div>
-                                        <!-- Avatar --> 
-                                        <div class="comment-avatar"><img src="imagenes/avatar.png" alt=""></div>
-                                        <!-- Contenedor del Comentario -->
-                                        <div class="comment-box">
-                                            <div class="comment-head">
-                                                <h6 class="comment-name"><a href="perfilUsuario.html">usuario</a></h6>
-                                                <span>hace 10 minutos</span>
-                                            </div>
-                                            <div class="comment-content">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -103,5 +73,6 @@
         </div>
 
         <script src="scripts/navbar.js"></script>
+        <script src="scripts/publicacion.js"></script>
     </body>
 </html>

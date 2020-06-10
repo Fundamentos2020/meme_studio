@@ -39,7 +39,7 @@
 
 
         public function setID($id){
-            if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_id !== null)) {
+            if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_comentario_id !== null)) {
                 throw new ComentarioException("Error en ID del Comentario");
             }
             $this->_comentario_id = $id;

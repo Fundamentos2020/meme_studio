@@ -35,9 +35,10 @@ if(array_key_exists("meme_id", $_GET)){
 
 
         try {
-            $sql = 'SELECT comentario_id, usuario_id, meme_id, contenido,
-                        DATE_FORMAT(fecha_comentario, "%Y-%m-%d %H:%i") fecha_comentario
-                    FROM comentarios WHERE meme_id = :meme_id ORDER BY fecha_comentario DESC';
+            $sql = 'SELECT comentario_id, comentarios.usuario_id, meme_id, contenido,
+                        DATE_FORMAT(fecha_comentario, "%Y-%m-%d %H:%i") fecha_comentario, usuarios.nombre_usuario, usuarios.ruta_imagen_perfil
+                    FROM comentarios INNER JOIN usuarios WHERE comentarios.usuario_id = usuarios.usuario_id 
+                    AND meme_id = :meme_id ORDER BY fecha_comentario DESC';
 
             $query = $connection->prepare($sql);
             $query->bindParam(':meme_id', $meme_id, PDO::PARAM_INT);
@@ -48,9 +49,13 @@ if(array_key_exists("meme_id", $_GET)){
             $comentarios = array();
             
             while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $comentario = new Comentario($row['id_comentario'], $row['usuario_id'], $row['meme_id'], $row['contenido'], $row['fecha_comentario']);
+                $comentario = new Comentario($row['comentario_id'], $row['usuario_id'], $row['meme_id'], $row['contenido'], $row['fecha_comentario']);
+                $comentario_completo = $comentario->getArray();
 
-                $comentarios[] = $comentario->getArray();
+                $comentario_completo['nombre_usuario'] = $row['nombre_usuario'];
+                $comentario_completo['ruta_imagen_perfil'] = $row['ruta_imagen_perfil'];
+
+                $comentarios[] = $comentario_completo;
             }
 
             $returnData = array();
@@ -167,7 +172,7 @@ else if (empty($_GET)) {
 
             $sql = 'SELECT comentario_id, usuario_id, meme_id, contenido,
                         DATE_FORMAT(fecha_comentario, "%Y-%m-%d %H:%i") fecha_comentario
-                    FROM comentarios WHERE id_comentario = :comentario_id';
+                    FROM comentarios WHERE comentario_id = :comentario_id';
 
             $query = $connection->prepare($sql);
             $query->bindParam(':comentario_id', $ultimo_ID, PDO::PARAM_INT);
