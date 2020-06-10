@@ -32,13 +32,8 @@
             }
     
             try {
-<<<<<<< HEAD
                 $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud
                         FROM moderaciones WHERE estatus_moderacion = 'PENDIENTE' AND meme_id = :meme_id ORDER BY fecha_solicitud DESC';
-=======
-                $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i")
-                        FROM moderaciones WHERE estatus_moderacion = \'PENDIENTE\' AND meme_id = :meme_id ORDER BY fecha_solicitud DESC';
->>>>>>> 86a5aa5fa7fa0ead7927bf2d2c45011607634fa5
     
                 $query = $connection->prepare($sql);
                 $query->bindParam(':meme_id', $meme_id, PDO::PARAM_INT);
@@ -216,14 +211,9 @@
     
                 $ultimo_ID = $connection->lastInsertId();
     
-<<<<<<< HEAD
                 $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud
                         FROM moderaciones WHERE estatus_moderacion = 'PENDIENTE' AND moderacion_id = :moderacion_id ORDER BY fecha_solicitud DESC';
     
-=======
-                $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i")
-                        FROM moderaciones WHERE moderacion_id = :moderacion_id';
->>>>>>> 86a5aa5fa7fa0ead7927bf2d2c45011607634fa5
                 $query = $connection->prepare($sql);
                 $query->bindParam(':moderacion_id', $ultimo_ID, PDO::PARAM_INT);
                 $query->execute();
