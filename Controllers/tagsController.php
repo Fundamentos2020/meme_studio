@@ -19,63 +19,63 @@
 
     if (array_key_exists("tag_id", $_GET)) {
         if($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        $tag_id = $_GET['tag_id'];
-        if ($tag_id == '' || !is_numeric($tag_id)) {
-            $response = new Response();
-            $response->setHttpStatusCode(400);
-            $response->setSuccess(false);
-            $response->addMessage("El id del tag no puede estar vacío y debe ser numérico");
-            $response->send();
-            exit();
-        }
-
-        try {
-            $sql = 'SELECT tag_id, nombre_tag FROM tags WHERE tag_id = :tag_id';
-            $query = $connection->prepare($sql);
-            $query->bindParam(':tag_id', $tag_id, PDO::PARAM_INT);
-
-            $query->execute();
-
-            $rowCount = $query->rowCount();
-            $tags = array();
-            
-            while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $tag = new MemeTag($row['tag_id'], $row['nombre_tag']);
-                $tags[] = $meme_tag->getArray();
+        {
+            $tag_id = $_GET['tag_id'];
+            if ($tag_id == '' || !is_numeric($tag_id)) {
+                $response = new Response();
+                $response->setHttpStatusCode(400);
+                $response->setSuccess(false);
+                $response->addMessage("El id del tag no puede estar vacío y debe ser numérico");
+                $response->send();
+                exit();
             }
 
-            $returnData = array();
-            $returnData['total_registros'] = $rowCount;
-            $returnData['tags'] = $tags;
+            try {
+                $sql = 'SELECT tag_id, nombre_tag FROM tags WHERE tag_id = :tag_id';
+                $query = $connection->prepare($sql);
+                $query->bindParam(':tag_id', $tag_id, PDO::PARAM_INT);
+
+                $query->execute();
+
+                $rowCount = $query->rowCount();
+                $tags = array();
+                
+                while($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                    $tag = new MemeTag($row['tag_id'], $row['nombre_tag']);
+                    $tags[] = $meme_tag->getArray();
+                }
+
+                $returnData = array();
+                $returnData['total_registros'] = $rowCount;
+                $returnData['tags'] = $tags;
+                
+                $response = new Response();
+                $response->setHttpStatusCode(200);
+                $response->setSuccess(true);
+                $response->setToCache(true);
+                $response->setData($returnData);
+                $response->send();
+                exit();
+            }
+            catch (TagException $e){
+                $response = new Response();
+                $response->setHttpStatusCode(500);
+                $response->setSuccess(false);
+                $response->addMessage($e->getMessage());
+                $response->send();
+                exit();
+            }
+            catch (PDOException $e){
+                error_log("Error de consulta - " . $e);
             
-            $response = new Response();
-            $response->setHttpStatusCode(200);
-            $response->setSuccess(true);
-            $response->setToCache(true);
-            $response->setData($returnData);
-            $response->send();
-            exit();
+                $response = new Response();
+                $response->setHttpStatusCode(500);
+                $response->setSuccess(false);
+                $response->addMessage("Error en conexión a Base de datos");
+                $response->send();
+                exit();
+            }
         }
-        catch (MemeTagException $e){
-            $response = new Response();
-            $response->setHttpStatusCode(500);
-            $response->setSuccess(false);
-            $response->addMessage($e->getMessage());
-            $response->send();
-            exit();
-        }
-        catch (PDOException $e){
-            error_log("Error de consulta - " . $e);
-        
-            $response = new Response();
-            $response->setHttpStatusCode(500);
-            $response->setSuccess(false);
-            $response->addMessage("Error en conexión a Base de datos");
-            $response->send();
-            exit();
-        }
-    }
     }
     //GET host/tags
     elseif(empty($_GET)){
@@ -215,7 +215,7 @@
                 $response->send();
                 exit();
             }
-            catch (TareaException $e) {
+            catch (TagException $e) {
                 $response = new Response();
                 $response->setHttpStatusCode(500);
                 $response->setSuccess(false);
