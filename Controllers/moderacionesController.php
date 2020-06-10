@@ -33,7 +33,7 @@
     
     
             try {
-                $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i")
+                $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud
                         FROM moderaciones WHERE estatus_moderacion = 'PENDIENTE' AND meme_id = :meme_id ORDER BY fecha_solicitud DESC';
     
                 $query = $connection->prepare($sql);
@@ -161,7 +161,7 @@
     
                 $ultimo_ID = $connection->lastInsertId();
     
-                $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i")
+                $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud
                         FROM moderaciones WHERE estatus_moderacion = 'PENDIENTE' AND moderacion_id = :moderacion_id ORDER BY fecha_solicitud DESC';
     
                 $query = $connection->prepare($sql);
@@ -234,5 +234,179 @@
         $response->addMessage("Ruta no encontrada");
         $response->send();
         exit();
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'PATCH'){
+        try {
+            if ($_SERVER['CONTENT_TYPE'] !== 'application/json'){
+                $response = new Response();
+                $response->setHttpStatusCode(400);
+                $response->setSuccess(false);
+                $response->addMessage('Encabezado "Content type" no es JSON');
+                $response->send();
+                exit();
+            }
+    
+            $patchData = file_get_contents('php://input');
+    
+            if (!$json_data = json_decode($patchData)) {
+                $response = new Response();
+                $response->setHttpStatusCode(400);
+                $response->setSuccess(false);
+                $response->addMessage('El cuerpo de la solicitud no es un JSON válido');
+                $response->send();
+                exit();
+            }
+    
+            $actualiza_retroalimentacion = false;
+            $actualiza_estado = false;
+            $actualiza_fecha_solicitud = false;
+    
+            $campos_query = "";
+    
+            if (isset($json_data->retroalimentacion)) {
+                $actualiza_retroalimentacion = true;
+                $campos_query .= "retroalimentacion = :retroalimentacion, ";
+            }
+    
+            if (isset($json_data->estatus_moderacion)) {
+                $actualiza_estado = true;
+                $campos_query .= "estatus_moderacion = :estatus_moderacion, ";
+            }
+
+            if (isset($json_data->fecha_solicitud)) {
+                $actualiza_fecha_solicitud = true;
+                $campos_query .= "fecha_solicitud = :fecha_solicitud, ";
+            }
+    
+            $campos_query = rtrim($campos_query, ", ");
+    
+            if ($actualiza_retroalimentacion === false && $actualiza_estado === false && $actualiza_fecha_solicitud === false) {
+                $response = new Response();
+                $response->setHttpStatusCode(400);
+                $response->setSuccess(false);
+                $response->addMessage("No hay campos para actualizar");
+                $response->send();
+                exit();
+            }
+    
+            $query = $connection->prepare('SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion,  DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud 
+            FROM moderaciones WHERE moderacion_id = :moderacion_id');
+            $query->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
+            $query->execute();
+    
+            $rowCount = $query->rowCount();
+    
+            if($rowCount === 0) {
+                $response = new Response();
+                $response->setHttpStatusCode(404);
+                $response->setSuccess(false);
+                $response->addMessage("No se encontró el meme ha moderar");
+                $response->send();
+                exit();
+            }
+    
+            while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                $moderar = new Moderacion($row['moderacion_id'], $row['meme_id'], $row['estatus_moderacion'], $row['retroalimentacion'], $row['fecha_solicitud']);
+            }
+    
+            $cadena_query = 'UPDATE moderaciones SET ' . $campos_query . ' WHERE moderacion_id = :moderacion_id';
+            $query = $connection->prepare($cadena_query);
+    
+            if($actualiza_retroalimentacion === true) {
+                $moderar->setRetroalimentacion($json_data->retroalimentacion);
+                $up_retroalimentacion = $moderar->getRetroalimentacion();
+                $query->bindParam(':retroalimentacion', $up_retroalimentacion, PDO::PARAM_STR);
+            }
+    
+            if($actualiza_estado === true) {
+                $moderar->setEstatusModeracion($json_data->estatus_moderacion);
+                $up_estatus = $moderar->getEstatusModeracion();
+                $query->bindParam(':estatus_moderacion', $up_estatus, PDO::PARAM_STR);
+            }
+
+            if($actualiza_fecha_solicitud === true) {
+                $moderar->setFechaSolicitud($json_data->fecha_solicitud);
+                $up_fechaS = $moderar->getFechaSolicitud();
+                $query->bindParam(':fecha_solicitud', $up_fechaS, PDO::PARAM_STR);
+            }
+    
+            $query->bindParam(':moderacion_id', $moderacion_id, PDO::PARAM_INT);
+            $query->execute();
+    
+            $rowCount = $query->rowCount();
+    
+            if ($rowCount === 0) {
+                $response = new Response();
+                $response->setHttpStatusCode(500);
+                $response->setSuccess(false);
+                $response->addMessage("Error al actualizar moderación");
+                $response->send();
+                exit();
+            }
+    
+            $query = $connection->prepare('SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion,  DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud 
+            FROM moderaciones WHERE moderacion_id = :moderacion_id');
+            $query->bindParam(':moderacion_id', $moderacion_id, PDO::PARAM_INT);
+            $query->execute();
+    
+            $rowCount = $query->rowCount();
+    
+            if($rowCount === 0) {
+                $response = new Response();
+                $response->setHttpStatusCode(404);
+                $response->setSuccess(false);
+                $response->addMessage("No se encontró la publicacion a moderar después de actulizar");
+                $response->send();
+                exit();
+            }
+    
+            $moderacioness = array();
+    
+            while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                $moderarr = new Moderacion($row['moderacion_id'], $row['meme_id'], $row['estatus_moderacion'], $row['retroalimentacion'], $row['fecha_solicitud']);
+    
+                $moderacioness[] = $moderarr->getArray();
+            }
+    
+            $returnData = array();
+            $returnData['total_registros'] = $rowCount;
+            $returnData['moderacioness'] = $moderacioness;
+    
+            $response = new Response();
+            $response->setHttpStatusCode(200);
+            $response->setSuccess(true);
+            $response->addMessage("Moderación actualizado");
+            $response->setData($returnData);
+            $response->send();
+            exit();
+        }
+        catch(TareaException $e) {
+            $response = new Response();
+            $response->setHttpStatusCode(500);
+            $response->setSuccess(false);
+            $response->addMessage($e->getMessage());
+            $response->send();
+            exit();
+        }
+        catch(PDOException $e) {
+            error_log("Error en BD - " . $e);
+    
+            $response = new Response();
+            $response->setHttpStatusCode(500);
+            $response->setSuccess(false);
+            $response->addMessage("Error en BD al actualizar la tarea");
+            $response->send();
+            exit();
+        }
+        
+        else {
+            $response = new Response();
+            $response->setHttpStatusCode(405);
+            $response->setSuccess(false);
+            $response->addMessage("Método no permitido");
+            $response->send();
+            exit();
+        }
     }
 ?>
