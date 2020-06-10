@@ -31,10 +31,9 @@
                 exit();
             }
     
-    
             try {
                 $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i")
-                        FROM moderaciones WHERE estatus_moderacion = 'PENDIENTE' AND meme_id = :meme_id ORDER BY fecha_solicitud DESC';
+                        FROM moderaciones WHERE estatus_moderacion = \'PENDIENTE\' AND meme_id = :meme_id ORDER BY fecha_solicitud DESC';
     
                 $query = $connection->prepare($sql);
                 $query->bindParam(':meme_id', $meme_id, PDO::PARAM_INT);
@@ -90,9 +89,59 @@
             exit();
         }
     }
-    else if (empty($_GET)) {
+    else if (empty($_GET)){
+        // GET host/moderaciones
+        if($_SERVER['REQUEST_METHOD'] === 'GET'){
+            try {
+                $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i")
+                        FROM moderaciones WHERE estatus_moderacion =  \'PENDIENTE\' ORDER BY fecha_solicitud DESC';
+    
+                $query = $connection->prepare($sql);
+                $query->execute();
+    
+                $rowCount = $query->rowCount();
+
+                $pendientes = array();
+                
+                while($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                    $pendiente = new Moderacion($row['moderacion_id'], $row['meme_id'], $row['estatus_moderacion'], $row['retroalimentacion'], $row['fecha_solicitud']);
+    
+                    $pendientes[] = $pendiente->getArray();
+                }
+    
+                $returnData = array();
+                $returnData['total_registros'] = $rowCount;
+                $returnData['pendientes'] = $pendientes;
+                
+                $response = new Response();
+                $response->setHttpStatusCode(200);
+                $response->setSuccess(true);
+                $response->setToCache(true);
+                $response->setData($returnData);
+                $response->send();
+                exit();
+            }
+            catch (ModeracionException $e){
+                $response = new Response();
+                $response->setHttpStatusCode(500);
+                $response->setSuccess(false);
+                $response->addMessage($e->getMessage());
+                $response->send();
+                exit();
+            }
+            catch (PDOException $e){
+                error_log("Error de consulta - " . $e);
+            
+                $response = new Response();
+                $response->setHttpStatusCode(500);
+                $response->setSuccess(false);
+                $response->addMessage("Error en conexión a Base de datos");
+                $response->send();
+                exit();
+            }
+        }
         // POST host/moderaciones
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        else if($_SERVER['REQUEST_METHOD'] === 'POST'){
             try {
                 if ($_SERVER['CONTENT_TYPE'] !== 'application/json'){
                     $response = new Response();
@@ -131,21 +180,22 @@
                     $json_data->meme_id,
                     $json_data->estatus_moderacion,
                     $json_data->retroalimentacion,
-                    //$json_data->fecha_solicitud
+                    $json_data->fecha_solicitud
                 );
     
                 $meme_id = $modera->getMemeID();
                 $estatus_moderacion = $modera->getEstatusModeracion();
                 $retroalimentacion = $modera->getRetroalimentacion();
-                //$fecha_solicitud = $modera->getFechaSolicitud();
+                $fecha_solicitud = $modera->getFechaSolicitud();
     
-                $sql = 'INSERT INTO moderaciones (meme_id, estatus_moderacion, retroalimentacion)
-                        VALUES (:meme_id, :estatus_moderacion, :retroalimentacion)';
+                $sql = 'INSERT INTO moderaciones (meme_id, estatus_moderacion, retroalimentacion, fecha_solicitud)
+                        VALUES (:meme_id, :estatus_moderacion, :retroalimentacion, STR_TO_DATE(:fecha_solicitud, \'%Y-%m-%d %H:%i\'))';
     
                 $query = $connection->prepare($sql);
                 $query->bindParam(':meme_id', $meme_id, PDO::PARAM_INT);
                 $query->bindParam(':estatus_moderacion', $estatus_moderacion, PDO::PARAM_STR);
                 $query->bindParam(':retroalimentacion', $retroalimentacion, PDO::PARAM_STR);
+                $query->bindParam(':fecha_solicitud', $fecha_solicitud, PDO::PARAM_STR);
                 $query->execute();
     
                 $rowCount = $query->rowCount();
@@ -154,7 +204,7 @@
                     $response = new Response();
                     $response->setHttpStatusCode(500);
                     $response->setSuccess(false);
-                    $response->addMessage("Error al moderar el meme");
+                    $response->addMessage("Error al crear la moderacion");
                     $response->send();
                     exit();
                 }
@@ -162,8 +212,7 @@
                 $ultimo_ID = $connection->lastInsertId();
     
                 $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i")
-                        FROM moderaciones WHERE estatus_moderacion = 'PENDIENTE' AND moderacion_id = :moderacion_id ORDER BY fecha_solicitud DESC';
-    
+                        FROM moderaciones WHERE moderacion_id = :moderacion_id';
                 $query = $connection->prepare($sql);
                 $query->bindParam(':moderacion_id', $ultimo_ID, PDO::PARAM_INT);
                 $query->execute();
@@ -172,7 +221,7 @@
                     $response = new Response();
                     $response->setHttpStatusCode(500);
                     $response->setSuccess(false);
-                    $response->addMessage("Error al obtener el meme para moderar");
+                    $response->addMessage("Error al obtener el la moderacion después de crearla");
                     $response->send();
                     exit();
                 }
@@ -192,12 +241,10 @@
                 $response = new Response();
                 $response->setHttpStatusCode(201);
                 $response->setSuccess(true);
-                $response->addMessage("Moderación hecha");
+                $response->addMessage("Moderación creada");
                 $response->setData($returnData);
                 $response->send();
                 exit();
-    
-    
             }
             catch (ModeracionException $e) {
                 $response = new Response();
@@ -217,6 +264,10 @@
                 $response->send();
                 exit();
             }
+        }
+        // PATCH host/moderaciones
+        else if($_SERVER['REQUEST_METHOD'] === 'PATCH'){
+
         }
         else {
             $response = new Response();
