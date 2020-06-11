@@ -20,7 +20,7 @@
                         <input type="search" placeholder="Buscar..">
                     </div>
                 </li>
-                <li><a href="inicio_sesion.html">Usuario</a></li>
+                <li><a id="btn-us" onclick="redirigirUsuario(this);" href="">Usuario</a></li>
                 <li class="boton-menu"><a href="javascript:void(0);" onclick="ajustarNavbar()">&#9776</a></li>
             </ul>
         </nav>
@@ -29,12 +29,12 @@
         <div class="loginbox">
             <img src="imagenes/avatars/avatar.png" class="avatar">
                 <h1 class="text-center">Iniciar sesión</h1>
-                <form action="perfilUsuario.html">
+                <form id="formLogin" method="POST" action="">
                     <p>Usuario</p>
                     <input type="text" name="nombre_usuario" placeholder="Ingresa tu usuario">
                     <p>Contraseña</p>
                     <input type="password" name="contrasena" placeholder="Ingresa tu contraseña">
-                    <input type="submit" value="Login">
+                    <input type="submit" id="boton-login" value="Login">
                     <a href="#">¿Olvidaste tu contraseña?</a><br>
                     <a href="registro_usuario.html">¿Aún no tienes cuenta? Regístrate</a>
                 </form>
@@ -43,5 +43,8 @@
         </div>
     </body>
 
+    <script src="scripts/app.js"></script>
+    <script src="scripts/botonUsuario.js"></script>
+    <script src="scripts/login.js"></script>
     <script src="scripts/navbar.js"></script>
 </html>

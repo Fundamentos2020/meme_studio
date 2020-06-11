@@ -19,8 +19,78 @@ catch (PDOException $e){
 }
 
 if(array_key_exists("usuario_id", $_GET)){
+    $usuario_id = $_GET['usuario_id'];
 
-    if($_SERVER['REQUEST_METHOD'] === 'PATCH'){
+    if ($usuario_id == '' || !is_numeric($usuario_id)) {
+        $response = new Response();
+        $response->setHttpStatusCode(400);
+        $response->setSuccess(false);
+        $response->addMessage("El id de usuario no puede estar vacío y debe ser numérico");
+        $response->send();
+        exit();
+    }
+    if($_SERVER['REQUEST_METHOD'] === 'GET'){
+        try{
+            $query = $connection->prepare('SELECT usuario_id, nombre_completo, nombre_usuario, ruta_imagen_perfil, descripcion FROM usuarios WHERE usuario_id = :usuario_id');
+            $query->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
+            $query->execute();
+    
+            $rowCount = $query->rowCount();
+    
+            if($rowCount === 0) {
+                $response = new Response();
+                $response->setHttpStatusCode(404);
+                $response->setSuccess(false);
+                $response->addMessage("No se encontró al usuario");
+                $response->send();
+                exit();
+            }
+    
+            $usuarios = array();
+    
+            while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                $usuario = array();
+                $usuario['usuario_id'] = $row['usuario_id'];
+                $usuario['nombre_completo'] = $row['nombre_completo'];
+                $usuario['nombre_usuario'] = $row['nombre_usuario'];
+                $usuario['ruta_imagen_perfil'] = $row['ruta_imagen_perfil'];
+                $usuario['descripcion'] = $row['descripcion'];
+
+                $usuarios[] = $usuario;
+            }
+    
+            $returnData = array();
+            $returnData['total_registros'] = $rowCount;
+            $returnData['usuarios'] = $usuarios;
+    
+            $response = new Response();
+            $response->setHttpStatusCode(200);
+            $response->setSuccess(true);
+            $response->setToCache(true);
+            $response->setData($returnData);
+            $response->send();
+            exit();
+        }
+        catch(UsuarioException $e) {
+            $response = new Response();
+            $response->setHttpStatusCode(500);
+            $response->setSuccess(false);
+            $response->addMessage($e->getMessage());
+            $response->send();
+            exit();
+        }
+        catch(PDOException $e) {
+            error_log("Error en BD - " . $e);
+    
+            $response = new Response();
+            $response->setHttpStatusCode(500);
+            $response->setSuccess(false);
+            $response->addMessage("Error en BD al recuperar el usuario");
+            $response->send();
+            exit();
+        }
+    }
+    else if($_SERVER['REQUEST_METHOD'] === 'PATCH'){
         try {
             if ($_SERVER['CONTENT_TYPE'] !== 'application/json'){
                 $response = new Response();
@@ -131,17 +201,17 @@ if(array_key_exists("usuario_id", $_GET)){
                 exit();
             }
     
-            $usuarioss = array();
+            $usuarios = array();
     
             while($row = $query->fetch(PDO::FETCH_ASSOC)){
-                $usuarioo = new Usuario($row['usuario_id'], $row['nombre_completo'], $row['nombre_usuario'], $row['ruta_imagen_perfil'], $row['descripcion']);
+                $usuario = new Usuario($row['usuario_id'], $row['nombre_completo'], $row['nombre_usuario'], $row['ruta_imagen_perfil'], $row['descripcion']);
     
-                $usuarioss[] = $usuarioo->getArray();
+                $usuarios[] = $usuario->getArray();
             }
     
             $returnData = array();
             $returnData['total_registros'] = $rowCount;
-            $returnData['usuarioss'] = $usuarioss;
+            $returnData['usuarios'] = $usuarios;
     
             $response = new Response();
             $response->setHttpStatusCode(200);
@@ -227,8 +297,26 @@ else if(empty($_GET)){
     $nombre_usuario = trim($json_data->nombre_usuario);
     $email = trim($json_data->email);
     $contrasena = $json_data->contrasena;
-    
+
     try {
+        $usuario = new Usuario(
+            null,
+            'USUARIO',
+            $nombre_completo,
+            $nombre_usuario,
+            $email,
+            $contrasena,
+            null,
+            null
+        );
+
+        $rol = $usuario->getRol();
+        $nombre_completo = $usuario->getNombreCompleto();
+        $nombre_usuario = $usuario->getNombreUsuario();
+        $email = $usuario->getEmail();
+        $contrasena = $usuario->getContrasena();
+
+    
         $query = $connection->prepare('SELECT usuario_id FROM usuarios WHERE nombre_usuario = :nombre_usuario');
         $query->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
         $query->execute();
@@ -246,7 +334,9 @@ else if(empty($_GET)){
     
         $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
     
-        $query = $connection->prepare('INSERT INTO usuarios (nombre_completo, nombre_usuario, email, contrasena) VALUES (:nombre_completo, :nombre_usuario, :email, :contrasena)');
+        $query = $connection->prepare('INSERT INTO usuarios (rol, nombre_completo, nombre_usuario, email, contrasena) 
+                VALUES (:rol, :nombre_completo, :nombre_usuario, :email, :contrasena)');
+        $query->bindParam(':rol', $rol, PDO::PARAM_STR);
         $query->bindParam(':nombre_completo', $nombre_completo, PDO::PARAM_STR);
         $query->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
         $query->bindParam(':email', $email, PDO::PARAM_STR);
@@ -276,6 +366,14 @@ else if(empty($_GET)){
         $response->setSuccess(true);
         $response->addMessage("Usuario creado");
         $response->setData($returnData);
+        $response->send();
+        exit();
+    }
+    catch (UsuarioException $e) {
+        $response = new Response();
+        $response->setHttpStatusCode(500);
+        $response->setSuccess(false);
+        $response->addMessage($e->getMessage());
         $response->send();
         exit();
     }

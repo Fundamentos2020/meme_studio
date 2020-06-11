@@ -12,12 +12,12 @@
         private $_descripcion;
 
 
-        public function __construct($id, $nombreCompleto, $nombreUsuario, $contra, $rolUsuario, $emailUsuario, $rutaPP, $descrip) {
+        public function __construct($id, $rolUsuario, $nombreCompleto, $nombreUsuario, $contra, $emailUsuario, $rutaPP, $descrip) {
             $this->setID($id);
+            $this->setRol($rolUsuario);
             $this->setNombreCompleto($nombreCompleto);
             $this->setNombreUsuario($nombreUsuario);
             $this->setContrasena($contra);
-            $this->setRol($rolUsuario);
             $this->setEmail($emailUsuario);
             $this->setRutaImagenPerfil($rutaPP);
             $this->setDescripcion($descrip);
@@ -58,9 +58,6 @@
         }
 
 
-
-
-
         public function setID($id) {
             if ($id !== null && (!is_numeric($id) || $id <= 0 || $id >= 2147483647 || $this->_usuario_id !== null)) {
                 throw new UsuarioException("Error en ID de usuario");
@@ -69,14 +66,14 @@
         }
     
         public function setNombreCompleto($nombreCompleto) {
-            if ($nombreCompleto !== null && strlen($nombreCompleto) < 8) {
+            if ($nombreCompleto !== null && strlen($nombreCompleto) < 5) {
                 throw new UsuarioException("Error en el nombre completo de usuario");
             }
             $this->_nombre_completo = $nombreCompleto;
         }
 
         public function setNombreUsuario($nombreUsuario) {
-            if ($nombreUsuario !== null && strlen($nombreUsuario) < 5 || strlen($nombreUsuario) > 20) {
+            if ($nombreUsuario !== null && strlen($nombreUsuario) < 1 || strlen($nombreUsuario) > 20) {
                 throw new UsuarioException("Error en el nombre de usuario");
             }
             $this->_nombre_usuario = $nombreUsuario;

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="estilo.css">
 
 </head>
-<body onload="permitirCambios()">
+<body onload="permitirCambios(); init();">
     <nav class="topnav">
         <label class="logo">MemeStudio</label>
         <ul>
@@ -29,7 +29,7 @@
                     <input type="search" placeholder="Buscar..">
                 </div>
             </li>
-            <li><a href="inicio_sesion.html">Usuario</a></li>
+            <li><a id="btn-us" onclick="redirigirUsuario(this);" href="">Usuario</a></li>
             <li class="boton-menu"><a href="javascript:void(0);" onclick="ajustarNavbar()">&#9776</a></li>
         </ul>
     </nav>
@@ -44,24 +44,14 @@
                 <input class="entrada" type="file" id="filePP" value="Cambiar">
             </div>
             <div class="card-body my-2">
-                <p class="full-name">Nombre Apellido</p>
-                <p class="username">@usuario</p>
-                <p class="city">San Luis Potosí</p>
-                <p class="desc mb-1" id="Descripcion">Sin descripción</p>
+                <div id="info-usuario"></div>
+
                 <div class="text-center" id="cambiarD">
                     <input class="entrada" type="text" id="txtDescripcion" value="Cambiar">
                 </div>
                 <div class="text-center" id="guardar">
                     <input class="entrada" type="button" id="guardarCambios" value="Guardar" onclick="guardarCambios();">
                 </div>
-                <!-----<p>
-                    <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon tumblr"><i class="fab fa-tumblr"></i></a>
-                    <a href="#" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="social-icon linkedin"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="social-icon google-plus"><i class="fab fa-google-plus"></i></a>
-                </p>----->
             </div>
         </div>
 
@@ -69,8 +59,8 @@
             <div class="text-center col-s-12 my-1">
                 <form class="">
                     <div class="pb-1">
-                        <input class="entrada" type="button" value="Editar información" onclick="permitirCambios();">
-                        <input class="entrada" type="button" value="Ver memes guardados">
+                        <input id="boton-editar" class="entrada" type="button" value="Editar información" onclick="permitirCambios();">
+                        <input id="boton-ver-memes" class="entrada" type="button" value="Ver memes guardados">
                     </div>
                 </form>
             </div>
@@ -78,10 +68,10 @@
     </div>
 
     
-
-    
-    
+    <script src="scripts/app.js"></script>
+    <script src="scripts/botonUsuario.js"></script>
     <script src="scripts/navbar.js"></script>
+    <script src="scripts/perfilUsuario.js"></script>
     <script src="scripts/cambioFotoPerfil.js"></script>
 </body>
 </html>

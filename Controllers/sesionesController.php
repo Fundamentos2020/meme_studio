@@ -1,6 +1,6 @@
 <?php 
 
-require_once('../Models/DB.php');
+require_once('../Models/BD.php');
 require_once('../Models/Response.php');
 
 try {
@@ -17,16 +17,16 @@ catch (PDOException $e){
     exit();
 }
 
-if (array_key_exists('id_sesion', $_GET)) {
-    $id_sesion = $_GET['id_sesion'];
+if (array_key_exists('sesion_id', $_GET)) {
+    $sesion_id = $_GET['sesion_id'];
 
-    if ($id_sesion === '' || !is_numeric($id_sesion)) {
+    if ($sesion_id === '' || !is_numeric($sesion_id)) {
         $response = new Response();
 
         $response->setHttpStatusCode(400);
         $response->setSuccess(false);
-        ($id_sesion === '' ? $response->addMessage("Id de la sesión no puede estar vacío") : false);
-        (!is_numeric($id_sesion) ? $response->addMessage("Id de la sesión debe ser numérico") : false);
+        ($sesion_id === '' ? $response->addMessage("Id de la sesión no puede estar vacío") : false);
+        (!is_numeric($sesion_id) ? $response->addMessage("Id de la sesión debe ser numérico") : false);
         $response->send();
         exit();
     }
@@ -45,8 +45,8 @@ if (array_key_exists('id_sesion', $_GET)) {
 
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         try {
-            $query = $connection->prepare('DELETE FROM sesiones WHERE id_sesion = :id AND token_acceso = :token_acceso');
-            $query->bindParam(':id', $id_sesion, PDO::PARAM_INT);
+            $query = $connection->prepare('DELETE FROM sesiones WHERE sesion_id = :id AND token_acceso = :token_acceso');
+            $query->bindParam(':id', $sesion_id, PDO::PARAM_INT);
             $query->bindParam(':token_acceso', $accesstoken, PDO::PARAM_STR);
             $query->execute();
 
@@ -63,7 +63,7 @@ if (array_key_exists('id_sesion', $_GET)) {
             }
 
             $returnData = array();
-            $returnData['id_sesion'] = intval($id_sesion);
+            $returnData['sesion_id'] = intval($sesion_id);
 
             $response = new Response();
     
@@ -119,8 +119,8 @@ if (array_key_exists('id_sesion', $_GET)) {
         try{
             $token_actualizacion = $jsonData->token_actualizacion;
 
-            $query = $connection->prepare('SELECT sesiones.id_sesion AS id_sesion, sesiones.id_usuario, activo, token_acceso, token_actualizacion, caducidad_token_acceso, caducidad_token_actualizacion FROM sesiones, usuarios WHERE sesiones.id_usuario = usuarios.id AND sesiones.id = :id_sesion AND sesiones.token_acceso = :token_acceso AND token_actualizacion = :token_actualizacion');
-            $query->bindParam(':id_sesion', $id_sesion, PDO::PARAM_INT);
+            $query = $connection->prepare('SELECT sesiones.sesion_id AS sesion_id, sesiones.usuario_id, token_acceso, token_actualizacion, caducidad_token_acceso, caducidad_token_actualizacion FROM sesiones, usuarios WHERE sesiones.usuario_id = usuarios.id AND sesiones.id = :sesion_id AND sesiones.token_acceso = :token_acceso AND token_actualizacion = :token_actualizacion');
+            $query->bindParam(':sesion_id', $sesion_id, PDO::PARAM_INT);
             $query->bindParam(':token_acceso', $accesstoken, PDO::PARAM_STR);
             $query->bindParam(':token_actualizacion', $token_actualizacion, PDO::PARAM_STR);
             $query->execute();
@@ -139,23 +139,12 @@ if (array_key_exists('id_sesion', $_GET)) {
 
             $row = $query->fetch(PDO::FETCH_ASSOC);
 
-            $consulta_id = $row['id_sesion'];
-            $consulta_id_usuario = $row['id_usuario'];
-            $consulta_activo = $row['activo'];
+            $consulta_id = $row['sesion_id'];
+            $consulta_usuario_id = $row['usuario_id'];
             $consulta_tokenAcceso = $row['token_acceso'];
             $consulta_tokenActualizacion = $row['token_actualizacion'];
             $consulta_cadTokenAcceso = $row['caducidad_token_acceso'];
             $consulta_cadTokenActualizacion = $row['caducidad_token_actualizacion'];
-
-            if ($consulta_activo !== 'SI') {
-                $response = new Response();
-
-                $response->setHttpStatusCode(401);
-                $response->setSuccess(false);
-                $response->addMessage("Usuario no activo");
-                $response->send();
-                exit();
-            }
 
             if (strtotime($consulta_cadTokenActualizacion) < time()) {
                 $response = new Response();
@@ -172,13 +161,13 @@ if (array_key_exists('id_sesion', $_GET)) {
             $caducidad_tacceso_s = 1200;
             $caducidad_tactualizacion_s = 1296000;
 
-            $query = $connection->prepare('UPDATE sesiones SET token_acceso = :token_acceso, caducidad_token_acceso = DATE_ADD(NOW(), INTERVAL :caducidad_tacceso_s SECOND), token_actualizacion = :token_actualizacion, caducidad_token_actualizacion = DATE_ADD(NOW(), INTERVAL :caducidad_tactualizacion_s SECOND) WHERE id_sesion = :id_sesion AND id_usuario = :id_usuario AND token_acceso = :consulta_tokenAcceso AND token_actualizacion = :consulta_tokenActualizacion');
+            $query = $connection->prepare('UPDATE sesiones SET token_acceso = :token_acceso, caducidad_token_acceso = DATE_ADD(NOW(), INTERVAL :caducidad_tacceso_s SECOND), token_actualizacion = :token_actualizacion, caducidad_token_actualizacion = DATE_ADD(NOW(), INTERVAL :caducidad_tactualizacion_s SECOND) WHERE sesion_id = :sesion_id AND usuario_id = :usuario_id AND token_acceso = :consulta_tokenAcceso AND token_actualizacion = :consulta_tokenActualizacion');
             $query->bindParam(':token_acceso', $token_acceso, PDO::PARAM_STR);
             $query->bindParam(':caducidad_tacceso_s', $caducidad_tacceso_s, PDO::PARAM_INT);
             $query->bindParam(':token_actualizacion', $token_actualizacion, PDO::PARAM_STR);
             $query->bindParam(':caducidad_tactualizacion_s', $caducidad_tactualizacion_s, PDO::PARAM_INT);
-            $query->bindParam(':id_sesion', $id_sesion, PDO::PARAM_INT);
-            $query->bindParam(':id_usuario', $consulta_id_usuario, PDO::PARAM_INT);
+            $query->bindParam(':sesion_id', $sesion_id, PDO::PARAM_INT);
+            $query->bindParam(':usuario_id', $consulta_usuario_id, PDO::PARAM_INT);
             $query->bindParam(':consulta_tokenAcceso', $consulta_tokenAcceso, PDO::PARAM_STR);
             $query->bindParam(':consulta_tokenActualizacion', $consulta_tokenActualizacion, PDO::PARAM_STR);
             $query->execute();
@@ -196,7 +185,8 @@ if (array_key_exists('id_sesion', $_GET)) {
             }
 
             $returnData = array();
-            $returnData['id_sesion'] = $id_sesion;
+            $returnData['sesion_id'] = $sesion_id;
+            $returnData['usuario_id'] = $usuario_id;
             $returnData['token_acceso'] = $token_acceso;
             $returnData['caducidad_token_acceso'] = $caducidad_tacceso_s;
             $returnData['token_actualizacion'] = $token_actualizacion;
@@ -276,7 +266,7 @@ elseif (empty($_GET)) {
         $nombre_usuario = $jsonData->nombre_usuario;
         $contrasena = $jsonData->contrasena;
     
-        $query = $connection->prepare('SELECT id_usuario, nombre_completo, contrasena, activo FROM usuarios WHERE nombre_usuario = :nombre_usuario');
+        $query = $connection->prepare('SELECT usuario_id, nombre_completo, contrasena FROM usuarios WHERE nombre_usuario = :nombre_usuario');
         $query->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
         $query->execute();
 
@@ -293,19 +283,9 @@ elseif (empty($_GET)) {
 
         $row = $query->fetch(PDO::FETCH_ASSOC);
 
-        $consulta_id = $row['id_usuario'];
+        $consulta_id = $row['usuario_id'];
         $consulta_nombreCompleto = $row['nombre_completo'];
         $consulta_contasena = $row['contrasena'];
-        $consulta_activo = $row['activo'];
-
-        if ($consulta_activo !== 'SI') {
-            $response = new Response();
-            $response->setHttpStatusCode(401);
-            $response->setSuccess(false);
-            $response->addMessage("Nombre de usuario no activo");
-            $response->send();
-            exit();
-        }
 
         if(!password_verify($contrasena, $consulta_contasena)) {
             $response = new Response();
@@ -336,8 +316,8 @@ elseif (empty($_GET)) {
     try{
         $connection->beginTransaction();
 
-        $query = $connection->prepare('INSERT INTO sesiones(id_usuario, token_acceso, caducidad_token_acceso, token_actualizacion, caducidad_token_actualizacion) VALUES (:id_usuario, :token_acceso, DATE_ADD(NOW(), INTERVAL :caducidad_tacceso_s SECOND), :token_actualizacion, DATE_ADD(NOW(), INTERVAL :caducidad_tactualizacion_s SECOND))');
-        $query->bindParam(':id_usuario', $consulta_id, PDO::PARAM_INT);
+        $query = $connection->prepare('INSERT INTO sesiones(usuario_id, token_acceso, caducidad_token_acceso, token_actualizacion, caducidad_token_actualizacion) VALUES (:usuario_id, :token_acceso, DATE_ADD(NOW(), INTERVAL :caducidad_tacceso_s SECOND), :token_actualizacion, DATE_ADD(NOW(), INTERVAL :caducidad_tactualizacion_s SECOND))');
+        $query->bindParam(':usuario_id', $consulta_id, PDO::PARAM_INT);
         $query->bindParam(':token_acceso', $token_acceso, PDO::PARAM_STR);
         $query->bindParam(':caducidad_tacceso_s', $caducidad_tacceso_s, PDO::PARAM_INT);
         $query->bindParam(':token_actualizacion', $token_actualizacion, PDO::PARAM_STR);
@@ -349,7 +329,8 @@ elseif (empty($_GET)) {
         $connection->commit();
 
         $returnData = array();
-        $returnData['id_sesion'] = intval($ultimoID);
+        $returnData['usuario_id'] = $consulta_id;
+        $returnData['sesion_id'] = intval($ultimoID);
         $returnData['token_acceso'] = $token_acceso;
         $returnData['caducidad_token_acceso'] = $caducidad_tacceso_s;
         $returnData['token_actualizacion'] = $token_actualizacion;

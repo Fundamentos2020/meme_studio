@@ -3,8 +3,6 @@ let pagActual = 1;
 var numeroPaginas = 0;
 
 var contenedorMemes = document.getElementById("contenedor-memes");
-const API = 'https://memestudiogs.000webhostapp.com/';
-
 
 function init() {
     pagActual = 1;
@@ -67,7 +65,6 @@ function obtenerMemes() {
                 }
 
                 contenedorMemes.innerHTML = " ";
-                console.log(memes.tags);
 
                 memes.forEach(function(meme, index){
                     if(index < lim || (index >= lim+memesPorPagina))

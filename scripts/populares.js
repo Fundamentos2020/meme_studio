@@ -2,8 +2,7 @@ let memesPorPagina = 5;
 let pagActual = 1;
 var numeroPaginas = 0;
 
-var contenedorMemes = document.getElementById("contenedor-memes");
-const API = 'https://memestudiogs.000webhostapp.com/';
+var contenedorMemes = document.getElementById("contenedor-memes");¿
 
 
 function init() {

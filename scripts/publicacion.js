@@ -1,5 +1,4 @@
 const meme_id = obtenerGetParam('meme_id');
-const API = 'https://memestudiogs.000webhostapp.com/';
 var contenedorMeme = document.getElementById("contenedor-meme");
 var listaComentarios = document.getElementById("comments-list");
 
@@ -75,7 +74,6 @@ function obtenerComentarios() {
                 
                 listaComentarios.innerHTML = "";
                 comentarios.forEach(function(comentario){
-                    console.log(comentario);
                     let nuevoComentarioHtml = 
                     `
                     <li>
@@ -108,14 +106,4 @@ function obtenerComentarios() {
     };
 
     xhr.send();
-}
-
-
-
-
-function obtenerGetParam(nombre_param){
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var value = url.searchParams.get(nombre_param);
-    return value;
 }
