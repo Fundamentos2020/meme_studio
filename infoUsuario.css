@@ -24,8 +24,8 @@ body {
 }
 
 .card .card-header .profile-img {
-    width: 96px;
-    height: 96px;
+    width: 200px;
+    height: 200px;
     border-radius: 1000px;
     position: absolute;
     left: 50%;

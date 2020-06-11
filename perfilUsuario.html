@@ -7,10 +7,16 @@
     <title>Perfil - MemeStudio</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
     <link rel="stylesheet" type="text/css" href="infoUsuario.css" />
     <link rel="stylesheet" href="estilo.css">
+
 </head>
-<body>
+<body onload="permitirCambios()">
     <nav class="topnav">
         <label class="logo">MemeStudio</label>
         <ul>
@@ -28,26 +34,34 @@
         </ul>
     </nav>
 
-    <div class="container my-2">
-
+    <div class="container my-3">
+        
         <div class="card row">
             <div class="card-header">
-                <img src="./imagenes/avatars/avatar.png" alt="Profile Image" class="profile-img">
+                <img src="./imagenes/avatars/avatar.png" alt="Profile Image" class="profile-img" id="image">
             </div>
-            <input class="entrada" type="button" value="Cambiar">
-            <div class="card-body">
+            <div class="my-4 text-center" id="cambiar">
+                <input class="entrada" type="file" id="filePP" value="Cambiar">
+            </div>
+            <div class="card-body my-2">
                 <p class="full-name">Nombre Apellido</p>
                 <p class="username">@usuario</p>
                 <p class="city">San Luis Potosí</p>
-                <p class="desc mb-1">Me encanta crear memes y compartilos</p>
-                <p>
+                <p class="desc mb-1" id="Descripcion">Sin descripción</p>
+                <div class="text-center" id="cambiarD">
+                    <input class="entrada" type="text" id="txtDescripcion" value="Cambiar">
+                </div>
+                <div class="text-center" id="guardar">
+                    <input class="entrada" type="button" id="guardarCambios" value="Guardar" onclick="guardarCambios();">
+                </div>
+                <!-----<p>
                     <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
                     <a href="#" class="social-icon tumblr"><i class="fab fa-tumblr"></i></a>
                     <a href="#" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
                     <a href="#" class="social-icon linkedin"><i class="fab fa-linkedin"></i></a>
                     <a href="#" class="social-icon google-plus"><i class="fab fa-google-plus"></i></a>
-                </p>
+                </p>----->
             </div>
         </div>
 
@@ -55,14 +69,19 @@
             <div class="text-center col-s-12 my-1">
                 <form class="">
                     <div class="pb-1">
-                        <input class="entrada" type="button" value="Editar información">
+                        <input class="entrada" type="button" value="Editar información" onclick="permitirCambios();">
                         <input class="entrada" type="button" value="Ver memes guardados">
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    
+
+    
     
     <script src="scripts/navbar.js"></script>
+    <script src="scripts/cambioFotoPerfil.js"></script>
 </body>
 </html>
