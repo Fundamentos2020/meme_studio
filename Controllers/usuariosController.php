@@ -1,6 +1,6 @@
 <?php 
 
-require_once('../Models/DB.php');
+require_once('../Models/BD.php');
 require_once('../Models/Usuario.php');
 require_once('../Models/Response.php');
 
@@ -169,15 +169,6 @@ if(array_key_exists("usuario_id", $_GET)){
             $response->send();
             exit();
         }
-        
-        else {
-            $response = new Response();
-            $response->setHttpStatusCode(405);
-            $response->setSuccess(false);
-            $response->addMessage("Método no permitido");
-            $response->send();
-            exit();
-        }
     }
     else {
         $response = new Response();
@@ -206,8 +197,6 @@ else if(empty($_GET)){
         $response->send();
         exit();
     }
-    
-    $row = $query->fetch(PDO::FETCH_ASSOC);
     
     $postData = file_get_contents('php://input');
     

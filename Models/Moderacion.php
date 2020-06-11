@@ -61,7 +61,7 @@
         }
 
         public function setRetroalimentacion($retroalimentacion) {
-            if ($retroalimentacion !== null && strlen($retroalimentacion) > 250 || strlen($retroalimentacion) < 1) {
+            if ($retroalimentacion !== null && strlen($retroalimentacion) > 250 || strlen($retroalimentacion) < 0) {
                 throw new ModeracionException("Error en retroalimentación de moderación");
             }
             $this->_retroalimentacion = $retroalimentacion;
