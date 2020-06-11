@@ -65,10 +65,10 @@ for(i=0;i<imagen.length;i++){
 }
 
 function mostrarPredeterminados() {
-    var x = document.getElementById("mostrarPlantillas");
-    if (x.style.display === "none") {
-      x.style.display = "block";
+    var m = document.getElementById("mostrarPlantillas");
+    if (m.style.display === "none") {
+      m.style.display = "block";
     } else {
-      x.style.display = "none";
+      m.style.display = "none";
     }
   }

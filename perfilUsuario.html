@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="estilo.css">
 
 </head>
-<body onload="permitirCambios(); init();">
+<body onload="permitirCambios(); mostrarMemes();">
     <nav class="topnav">
         <label class="logo">MemeStudio</label>
         <ul>
@@ -60,9 +60,19 @@
                 <form class="">
                     <div class="pb-1">
                         <input id="boton-editar" class="entrada" type="button" value="Editar información" onclick="permitirCambios();">
-                        <input id="boton-ver-memes" class="entrada" type="button" value="Ver memes guardados">
+                        <input id="boton-ver-memes" class="entrada" type="button" value="Ver memes guardados" onclick="mostrarMemes();">
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="row my-2" id="muestraMemes">
+            <div class="text-center">
+                <div class="col-m-6">
+                    <a href="publicacion.html"><img src="imagenes/plantillas/meme2.jpg" id="image" width="512" height="512"/></a>
+                </div>
+                <div class="col-m-6">
+                    <a href="publicacion.html"><img src="imagenes/plantillas/meme4.jpg" id="image" width="512" height="512"/></a>
+                </div>
             </div>
         </div>
     </div>

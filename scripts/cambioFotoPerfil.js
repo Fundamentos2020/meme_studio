@@ -65,3 +65,13 @@ function guardarCambios() {
         p.textContent = txt.value;
     };
 }
+
+function mostrarMemes() {
+    var m = document.getElementById("muestraMemes");
+    
+    if (m.style.display === "none") {
+      m.style.display = "block";
+    } else {
+      m.style.display = "none";
+    }
+  }
