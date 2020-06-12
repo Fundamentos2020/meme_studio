@@ -1,6 +1,7 @@
 var canvas = document.getElementById("canvas");
 var textoArriba;
 var textoAbajo;
+var filename = null;
 
 function GenerarMeme(){
         textoArriba=document.getElementById("textoArriba").value;
@@ -76,7 +77,7 @@ function mostrarPredeterminados() {
 
   function getNombre() {
     var fullPath = document.getElementById('fileMeme').files[0].name; 
-    var filename = fullPath.replace(/^.*\\/, "");
+    filename = fullPath.replace(/^.*\\/, "");
     // or, try this, 
     // var filename = fullPath.split("/").pop();
 }
@@ -125,12 +126,16 @@ function mostrarPredeterminados() {
     json['likes'] = 0;
     json['dislikes'] = 0;
     // El meme es público
-    if("checked".equals(getElementById('estadoMeme').value))
+    if(document.getElementById('estadoMeme').checked)
         json['estado_meme'] = 'PENDIENTE';
     // el meme es privado
     else
         json['estado_meme'] = 'PRIVADO';
-    json['ruta_imagen_meme'] = filename;
+
+    if(filename != null)
+        json['ruta_imagen_meme'] = filename;
+    else if(document.getElementById('image').src != null)
+        json['ruta_imagen_meme'] = document.getElementById('image').src;
     json['titulo'] = document.getElementById('TituloMeme').value;
     json['texto_superior'] = document.getElementById('textoArriba').value;
     json['texto_inferior'] = document.getElementById('textoAbajo').value;
