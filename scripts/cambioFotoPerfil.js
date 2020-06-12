@@ -48,10 +48,8 @@ function permitirCambios() {
       y.style.display = "none";
       z.style.display = "none";
     }
-  }
+}
 
-  var fullPath = document.getElementById('filePP').value; 
-  filename = fullPath.replace(/^.*\\/, "");
 
   var p = document.getElementById('Descripcion');
   var btn = document.getElementById('guardarCambios');
@@ -91,9 +89,12 @@ function permitirCambios() {
     }
 
     let json = {};
+    var fullPath = document.getElementById('filePP').value; 
+    filename = fullPath.replace(/^.*\\/, "");
 
     json['ruta_imagen_perfil'] = filename;
-    json['descripcion'] = txt.value;
+    if(txt.value != '')
+      json['descripcion'] = txt.value;
 
     var json_string = JSON.stringify(json);
 
