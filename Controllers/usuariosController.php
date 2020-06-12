@@ -138,7 +138,7 @@ if(array_key_exists("usuario_id", $_GET)){
                 exit();
             }
     
-            $query = $connection->prepare('SELECT usuario_id, ruta_imagen_perfil, descripcion FROM usuarios WHERE usuario_id = :usuario_id');
+            $query = $connection->prepare('SELECT usuario_id, nombre_completo, nombre_usuario, ruta_imagen_perfil, descripcion FROM usuarios WHERE usuario_id = :usuario_id');
             $query->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
             $query->execute();
     
@@ -154,11 +154,13 @@ if(array_key_exists("usuario_id", $_GET)){
             }
     
             while($row = $query->fetch(PDO::FETCH_ASSOC)){
-                $usuario = new Usuario($row['usuario_id'], $row['ruta_imagen_perfil'], $row['descripcion']);
+                $usuario = new Usuario($row['usuario_id'], $row['nombre_completo'], $row['nombre_usuario'], $row['ruta_imagen_perfil'], $row['descripcion']);
             }
     
-            $cadena_query = "UPDATE usuarios SET ' . $campos_query . ' WHERE usuario_id = :usuario_id";
+            $cadena_query = 'UPDATE usuarios SET ' . $campos_query . ' WHERE usuario_id = :usuario_id';
             $query = $connection->prepare($cadena_query);
+    
+            
     
             if($actualiza_ruta_imagen_perfil === true) {
                 $usuario->setRutaImagenPerfil($json_data->ruta_imagen_perfil);
@@ -186,7 +188,7 @@ if(array_key_exists("usuario_id", $_GET)){
                 exit();
             }
     
-            $query = $connection->prepare('SELECT usuario_id, ruta_imagen_perfil, descripcion FROM usuarios WHERE usuario_id = :usuario_id');
+            $query = $connection->prepare('SELECT usuario_id, nombre_completo, nombre_usuario, ruta_imagen_perfil, descripcion FROM usuarios WHERE usuario_id = :usuario_id');
             $query->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
             $query->execute();
     
@@ -204,7 +206,7 @@ if(array_key_exists("usuario_id", $_GET)){
             $usuarios = array();
     
             while($row = $query->fetch(PDO::FETCH_ASSOC)){
-                $usuario = new Usuario($row['usuario_id'], $row['ruta_imagen_perfil'], $row['descripcion']);
+                $usuario = new Usuario($row['usuario_id'], $row['nombre_completo'], $row['nombre_usuario'], $row['ruta_imagen_perfil'], $row['descripcion']);
     
                 $usuarios[] = $usuario->getArray();
             }
