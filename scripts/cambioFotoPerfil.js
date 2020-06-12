@@ -102,22 +102,7 @@ function permitirCambios() {
 
 
 
-
-
-
-function mostrarMemes() {
-  var m = document.getElementById("muestraMemes");
-  
-  if (m.style.display === "none") {
-    m.style.display = "block";
-  } else {
-    m.style.display = "none";
-  }
-}
-
-
-var contenedorMemes = document.getElementById("muestraMemes");
-//const usuario_id = obtenerGetParam('usuario_id');
+var contenedorMemes = document.getElementById("contenedor-memes");
 const botonVer = document.getElementById('boton-ver-memes');
 botonVer.addEventListener('click', verMemes);
 
@@ -133,7 +118,7 @@ function verMemes(e) {
                 var data = responseText.data;
                 
                 const memes = data.memes;
-                contenedorMeme.innerHTML = "";
+                contenedorMemes.innerHTML = "";
 
                 
                   memes.forEach(function(meme){
@@ -141,7 +126,7 @@ function verMemes(e) {
                           `
                           <div class="pb-1"><img class="meme" src="https://picsum.photos/800/600" /></div>
                           `
-                      contenedorMeme.innerHTML += addImg;
+                      contenedorMemes.innerHTML += addImg;
                   });
                 
             }
