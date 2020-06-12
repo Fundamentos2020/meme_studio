@@ -50,3 +50,20 @@ function obtenerGetParam(nombre_param){
     var value = url.searchParams.get(nombre_param);
     return value;
 }
+
+Number.prototype.padLeft = function(base,chr){
+    var  len = (String(base || 10).length - String(this).length)+1;
+    return len > 0? new Array(len).join(chr || '0')+this : this;
+}
+
+// Devuelve la fecha actual en formato YYYY-mm-dd h:i
+function obtenerFechaActual(){
+    var d = new Date,
+    dformat = [d.getFullYear(),
+               (d.getMonth()+1).padLeft(),
+               d.getDate().padLeft(),
+               ].join('-') +' ' +
+              [d.getHours().padLeft(),
+               d.getMinutes().padLeft()].join(':');
+    return dformat;
+}
