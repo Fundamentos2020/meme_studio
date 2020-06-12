@@ -3,22 +3,22 @@
 
     class Usuario {
         private $_usuario_id;
+        private $_rol;
         private $_nombre_completo;
         private $_nombre_usuario;
-        private $_contrasena;
-        private $_rol;
         private $_email;
+        private $_contrasena;
         private $_ruta_imagen_perfil;
         private $_descripcion;
 
 
-        public function __construct($id, $rolUsuario, $nombreCompleto, $nombreUsuario, $contra, $emailUsuario, $rutaPP, $descrip) {
+        public function __construct($id, $rolUsuario, $nombreCompleto, $nombreUsuario, $emailUsuario, $contra, $rutaPP, $descrip) {
             $this->setID($id);
             $this->setRol($rolUsuario);
             $this->setNombreCompleto($nombreCompleto);
             $this->setNombreUsuario($nombreUsuario);
-            $this->setContrasena($contra);
             $this->setEmail($emailUsuario);
+            $this->setContrasena($contra);
             $this->setRutaImagenPerfil($rutaPP);
             $this->setDescripcion($descrip);
         }
@@ -64,6 +64,13 @@
             }
             $this->_usuario_id = $id;
         }
+
+        public function setRol($rolUsuario){
+            if (strtoupper($rolUsuario) !== 'USUARIO' && strtoupper($rolUsuario) !== 'MODERADOR') {
+                throw new UsuarioException("Error en el rol de usuario");
+            }
+            $this->_rol = $rolUsuario;
+        }
     
         public function setNombreCompleto($nombreCompleto) {
             if ($nombreCompleto !== null && strlen($nombreCompleto) < 5) {
@@ -79,25 +86,18 @@
             $this->_nombre_usuario = $nombreUsuario;
         }
 
+        public function setEmail($emailUsuario){
+            if ($emailUsuario !== null && filter_var($emailUsuario, FILTER_VALIDATE_EMAIL) === false) {
+                throw new UsuarioException("Error en el email de usuario");
+            }
+            $this->_email = $emailUsuario;
+        }
+
         public function setContrasena($contra) {
             if ($contra !== null && (strlen($contra) < 1 || strlen($contra) > 255)) {
                 throw new UsuarioException("Error en la contraseña de usuario");
             }
             $this->_contrasena = $contra;
-        }
-
-        public function setRol($rolUsuario){
-            if (strtoupper($rolUsuario) !== 'USUARIO' && strtoupper($rolUsuario) !== 'MODERADOR') {
-                throw new UsuarioException("Error en el rol de usuario");
-            }
-            $this->_rol = $rolUsuario;
-        }
-
-        public function setEmail($emailUsuario){
-            if ($emailUsuario !== null && filter_var($emailUsuario, FILTER_VALIDATE_EMAIL)) {
-                throw new UsuarioException("Error en el email de usuario");
-            }
-            $this->_email = $emailUsuario;
         }
 
         public function setRutaImagenPerfil($rutaPP){
@@ -119,11 +119,11 @@
             $usuario = array();
     
             $usuario['usuario_id'] = $this->getID();
+            $usuario['rol'] = $this->getRol();
             $usuario['nombre_completo'] = $this->getNombreCompleto();
             $usuario['nombre_usuario'] = $this->getNombreUsuario();
-            $usuario['contrasena'] = $this->getContrasena();
-            $usuario['rol'] = $this->getRol();
             $usuario['email'] = $this->getEmail();
+            $usuario['contrasena'] = $this->getContrasena();
             $usuario['ruta_imagen_perfil'] = $this->getRutaImagenPerfil();
             $usuario['descripcion'] = $this->getDescripcion();
     

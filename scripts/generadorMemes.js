@@ -72,3 +72,64 @@ function mostrarPredeterminados() {
       m.style.display = "none";
     }
   }
+
+
+  function getNombre() {
+    var fullPath = document.getElementById('fileMeme').files[0].name; 
+    var filename = fullPath.replace(/^.*\\/, "");
+    // or, try this, 
+    // var filename = fullPath.split("/").pop();
+}
+
+
+  const botonGenerarMeme = document.getElementById('botonGenerar');
+  botonGenerarMeme.addEventListener('click', registrarMeme); 
+
+  function registrarMeme(e) {
+    e.preventDefault();
+
+    let sesion = getSesion();
+    if(sesion == null){
+        alert("Inicia sesión para poder publicar");
+        return;
+    }
+
+    var reader = new FileReader();
+
+    reader.onload = function (event) {
+    document.getElementById("fileMeme").src = event.target.result;
+    };
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", API + "memes" , true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onload = function() {
+        var responseText = JSON.parse(this.responseText);
+        data = responseText.data;
+        if(this.status === 201) {
+            alert(responseText.messages);
+            window.location.href = "./index.html";
+        }
+        else {
+            alert(responseText.messages);
+        }
+    }
+
+    let json = {};
+    json['usuario_id'] = sesion.usuario_id;
+    json['likes'] = 0;
+    json['dislikes'] = 0;
+    json['estado_meme'] = 'ACEPTADO';
+    json['ruta_imagen_meme'] = filename;
+    json['titulo'] = document.getElementById('TituloMeme').value;
+    json['texto_superior'] = document.getElementById('textoArriba').value;
+    json['texto_inferior'] = document.getElementById('textoAbajo').value;
+    json['fecha_creacion'] = obtenerFechaActual();
+    json['fecha_publicacion'] = obtenerFechaActual();
+
+    var json_string = JSON.stringify(json);
+
+    xhr.send(json_string);
+}

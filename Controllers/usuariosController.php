@@ -296,7 +296,7 @@ else if(empty($_GET)){
     $nombre_completo = trim($json_data->nombre_completo);
     $nombre_usuario = trim($json_data->nombre_usuario);
     $email = trim($json_data->email);
-    $contrasena = $json_data->contrasena;
+    $contrasena = trim($json_data->contrasena);
 
     try {
         $usuario = new Usuario(
@@ -360,6 +360,7 @@ else if(empty($_GET)){
         $returnData['usuario_id'] = $ultimoID;
         $returnData['nombre_completo'] = $nombre_completo;
         $returnData['nombre_usuario'] = $nombre_usuario;
+        
     
         $response = new Response();
         $response->setHttpStatusCode(201);

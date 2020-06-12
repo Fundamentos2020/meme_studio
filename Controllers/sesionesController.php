@@ -266,7 +266,7 @@ elseif (empty($_GET)) {
         $nombre_usuario = $jsonData->nombre_usuario;
         $contrasena = $jsonData->contrasena;
     
-        $query = $connection->prepare('SELECT usuario_id, nombre_completo, contrasena FROM usuarios WHERE nombre_usuario = :nombre_usuario');
+        $query = $connection->prepare('SELECT usuario_id, nombre_completo, email, contrasena FROM usuarios WHERE nombre_usuario = :nombre_usuario');
         $query->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
         $query->execute();
 

@@ -123,7 +123,7 @@ class Meme {
     }
 
     public function setTitulo($titulo) {
-        if ($titulo === null || strlen($titulo) > 100 || strlen($titulo) < 1) {
+        if ($titulo === "") {
             throw new MemeException("Error en título del meme");
         }
         $this->_titulo = $titulo;
