@@ -17,7 +17,7 @@ function cambiaFoto(){
 var fileTag = document.getElementById("filePP"),
     preview = document.getElementById("image");
     
-fileTag.addEventListener("change", function() {
+fileTag.addEventListener("DOMContentLoaded", function() {
   changeImage(this);
 });
 
@@ -50,17 +50,7 @@ function permitirCambios() {
     }
   }
 
-function mostrarMemes() {
-    var m = document.getElementById("muestraMemes");
-    
-    if (m.style.display === "none") {
-      m.style.display = "block";
-    } else {
-      m.style.display = "none";
-    }
-  }
-
-  var fullPath = document.getElementById('fileMeme').files[0].name; 
+  var fullPath = document.getElementById('filePP').value; 
   filename = fullPath.replace(/^.*\\/, "");
 
   var p = document.getElementById('Descripcion');
@@ -85,7 +75,7 @@ function mostrarMemes() {
     const usuario_id = obtenerGetParam('usuario_id');
     var xhr = new XMLHttpRequest();
 
-    xhr.open("PATCH", API + "usuarios" , true);
+    xhr.open("PATCH", API + "usuarios/usuario_id="+usuario_id , true);
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onload = function() {
@@ -102,8 +92,7 @@ function mostrarMemes() {
 
     let json = {};
 
-    if(filename != null)
-      json['ruta_imagen_perfil'] = filename;
+    json['ruta_imagen_perfil'] = filename;
     json['descripcion'] = txt.value;
 
     var json_string = JSON.stringify(json);
@@ -111,15 +100,31 @@ function mostrarMemes() {
     xhr.send(json_string);
 }
 
+
+
+
+
+
+function mostrarMemes() {
+  var m = document.getElementById("muestraMemes");
+  
+  if (m.style.display === "none") {
+    m.style.display = "block";
+  } else {
+    m.style.display = "none";
+  }
+}
+
+
 var contenedorMemes = document.getElementById("muestraMemes");
-const meme_id = obtenerGetParam('meme_id');
+//const usuario_id = obtenerGetParam('usuario_id');
 const botonVer = document.getElementById('boton-ver-memes');
 botonVer.addEventListener('click', verMemes);
 
 function verMemes(e) {
   var xhr =  new XMLHttpRequest();
 
-    xhr.open("GET", API + "memes/meme_id="+meme_id, true);
+    xhr.open("GET", API + "memes/usuario_id="+usuario_id, true);
 
     xhr.onload = function() {
         var responseText = JSON.parse(this.responseText);
@@ -130,7 +135,7 @@ function verMemes(e) {
                 const memes = data.memes;
                 contenedorMeme.innerHTML = "";
 
-                if(meme.usuario_id === sesion.usuario_id){
+                
                   memes.forEach(function(meme){
                       let addImg = 
                           `
@@ -138,7 +143,7 @@ function verMemes(e) {
                           `
                       contenedorMeme.innerHTML += addImg;
                   });
-                }
+                
             }
         }
         else {
