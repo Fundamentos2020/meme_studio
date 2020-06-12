@@ -79,7 +79,7 @@ function obtenerMeme(meme_id) {
                     addImg += `</div>`
                     contenedorMemeInfo.innerHTML += addImg;
                     
-                    imagenMeme.src = '.' + meme.ruta_imagen_meme;
+                    imagenMeme.src = meme.ruta_imagen_meme;
                 });
             }
         }

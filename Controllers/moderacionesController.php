@@ -218,7 +218,7 @@
     
             try {
                 $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud
-                        FROM moderaciones WHERE estatus_moderacion = \'PENDIENTE\' AND meme_id = :meme_id ORDER BY fecha_solicitud DESC';
+                        FROM moderaciones WHERE estatus_moderacion = \'PENDIENTE\' AND meme_id = :meme_id ORDER BY fecha_solicitud ASC';
     
                 $query = $connection->prepare($sql);
                 $query->bindParam(':meme_id', $meme_id, PDO::PARAM_INT);
@@ -279,7 +279,7 @@
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
             try {
                 $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud
-                        FROM moderaciones WHERE estatus_moderacion =  \'PENDIENTE\' ORDER BY fecha_solicitud DESC';
+                        FROM moderaciones WHERE estatus_moderacion =  \'PENDIENTE\' ORDER BY fecha_solicitud ASC';
     
                 $query = $connection->prepare($sql);
                 $query->execute();
@@ -397,7 +397,7 @@
                 $ultimo_ID = $connection->lastInsertId();
     
                 $sql = 'SELECT moderacion_id, meme_id, estatus_moderacion, retroalimentacion, DATE_FORMAT(fecha_solicitud, "%Y-%m-%d %H:%i") fecha_solicitud
-                        FROM moderaciones WHERE estatus_moderacion = \'PENDIENTE\' AND moderacion_id = :moderacion_id ORDER BY fecha_solicitud DESC';
+                        FROM moderaciones WHERE estatus_moderacion = \'PENDIENTE\' AND moderacion_id = :moderacion_id ORDER BY fecha_solicitud ASC';
     
                 $query = $connection->prepare($sql);
                 $query->bindParam(':moderacion_id', $ultimo_ID, PDO::PARAM_INT);

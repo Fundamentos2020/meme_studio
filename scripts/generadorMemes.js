@@ -74,8 +74,9 @@ function mostrarPredeterminados() {
     }
   }
 
-  var fullPath = document.getElementById('fileMeme').files[0].name; 
-  filename = fullPath.replace(/^.*\\/, "");
+  if(document.getElementById('fileMeme').files[0] != undefined)
+  var fullPath = document.getElementById('fileMeme').files[0].name;
+  //filename = fullPath.replace(/^.*\\/, "");
 
   const botonGenerarMeme = document.getElementById('botonGenerar');
   botonGenerarMeme.addEventListener('click', registrarMeme); 
@@ -105,10 +106,10 @@ function mostrarPredeterminados() {
         data = responseText.data;
         if(this.status === 201) {
             alert(responseText.messages);
-            window.location.href = "./index.html";
             // Se debe generar la moderacion
             if(data.memes[0].estado_meme == 'PENDIENTE')
                 registrarModeracion(data.memes[0].meme_id);
+            window.location.href = "./index.html";
         }
         else {
             alert(responseText.messages);
@@ -152,10 +153,6 @@ function registrarModeracion(meme_id){
         data = responseText.data;
         if(this.status === 201) {
             alert(responseText.messages);
-            window.location.href = "./index.html";
-            // Se debe generar 
-            if(data.memes[0].estado_meme == 'PENDIENTE')
-              registrarModeracion();
         }
         else {
             alert(responseText.messages);
