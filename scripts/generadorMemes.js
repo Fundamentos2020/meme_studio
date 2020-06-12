@@ -2,6 +2,7 @@ var canvas = document.getElementById("canvas");
 var textoArriba;
 var textoAbajo;
 var filename = null;
+const inputTags = document.getElementById('lista-tags');
 
 function GenerarMeme(){
         textoArriba=document.getElementById("textoArriba").value;
@@ -109,6 +110,7 @@ function mostrarPredeterminados() {
             // Se debe generar la moderacion
             if(data.memes[0].estado_meme == 'PENDIENTE')
                 registrarModeracion(data.memes[0].meme_id);
+            generarTags(data.memes[0].meme_id);
             window.location.href = "./index.html";
         }
         else {
@@ -143,7 +145,7 @@ function mostrarPredeterminados() {
 }
 
 function registrarModeracion(meme_id){
-  var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
 
     xhr.open("POST", API + "moderaciones" , true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -168,4 +170,35 @@ function registrarModeracion(meme_id){
     var json_string = JSON.stringify(json);
 
     xhr.send(json_string);
+}
+
+
+function generarTags(meme_id){
+    var cadenaTags = inputTags.value;
+    var arregloTags = cadenaTags.split(',');
+    for(var i = 0; i < arregloTags.length; i++){
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", API + "memes_tags" , true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onload = function() {
+            var responseText = JSON.parse(this.responseText);
+            data = responseText.data;
+            if(this.status === 201) {
+            }
+            else {
+                alert(responseText.messages);
+            }
+        }
+
+        let json = {};
+        json['meme_id'] = meme_id;
+        json['nombre_tag'] = arregloTags[i].trim();
+
+        var json_string = JSON.stringify(json);
+
+        xhr.send(json_string);
+    }
+    
 }

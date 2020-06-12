@@ -20,14 +20,14 @@
 
         public function setMemeID($meme_id) {
             if ($meme_id === null || !is_numeric($meme_id) || $meme_id <= 0 || $meme_id >= 2147483647) {
-                throw new MemeException("Error en ID de meme del meme-tag");
+                throw new MemeTagException("Error en ID de meme del meme-tag");
             }
             $this->_meme_id = $meme_id;
         }
 
         public function setTagID($tag_id) {
             if ($tag_id === null || !is_numeric($tag_id) || $tag_id <= 0 || $tag_id >= 2147483647) {
-                throw new MemeException("Error en ID de tag del meme-tag");
+                throw new MemeTagException("Error en ID de tag del meme-tag");
             }
             $this->_tag_id = $tag_id;
         }

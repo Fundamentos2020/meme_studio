@@ -107,19 +107,41 @@ else if (empty($_GET)) {
                 exit();
             }
 
-            if (!isset($json_data->meme_id) || !isset($json_data->tag_id)) {
+            if (!isset($json_data->meme_id) || !isset($json_data->nombre_tag)) {
                 $response = new Response();
                 $response->setHttpStatusCode(400);
                 $response->setSuccess(false);
                 (!isset($json_data->meme_id) ? $response->addMessage('El id del meme es obligatorio') : false);
-                (!isset($json_data->tag_id) ? $response->addMessage('El id del tag es obligatorio') : false);
+                (!isset($json_data->nombre_tag) ? $response->addMessage('El nombre del tag es obligatorio') : false);
                 $response->send();
                 exit();
             }
+            $nombre_tag = $json_data->nombre_tag;
+
+            $query = $connection->prepare('SELECT * FROM tags WHERE nombre_tag = :nombre_tag');
+            $query->bindParam(':nombre_tag', $nombre_tag, PDO::PARAM_STR);
+            $query->execute();
+
+            $rowCount = $query->rowCount();
+            $tag_id;
+
+            // El tag no existe, debe crearse
+            if ($rowCount === 0) {
+                $query = $connection->prepare('INSERT INTO tags (nombre_tag) VALUES (:nombre_tag)');
+                $query->bindParam(':nombre_tag', $nombre_tag, PDO::PARAM_STR);
+                $query->execute();
+
+                $query = $connection->prepare('SELECT * FROM tags WHERE nombre_tag = :nombre_tag');
+                $query->bindParam(':nombre_tag', $nombre_tag, PDO::PARAM_STR);
+                $query->execute();
+            }
+            $tag = $query->fetch(PDO::FETCH_ASSOC);
+            $tag_id = $tag['tag_id'];
+
 
             $meme_tag = new MemeTag(
                 $json_data->meme_id,
-                $json_data->tag_id
+                $tag_id
             );
 
             $meme_id = $meme_tag->getMemeID();
