@@ -87,7 +87,7 @@
 nav{
     overflow: hidden;
     background-color: #c3073f;
-    min-height: 80px;
+    min-height: 10px;
     height: auto;
     width: 100%;
     vertical-align: center;
@@ -241,6 +241,7 @@ label.logo{
 .container {
     padding-left: 1em;
     padding-right: 1em;
+    height: 40px;
 }
 
 .flex-container {
