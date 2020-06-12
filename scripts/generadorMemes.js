@@ -74,14 +74,8 @@ function mostrarPredeterminados() {
     }
   }
 
-
-  function getNombre() {
-    var fullPath = document.getElementById('fileMeme').files[0].name; 
-    filename = fullPath.replace(/^.*\\/, "");
-    // or, try this, 
-    // var filename = fullPath.split("/").pop();
-}
-
+  var fullPath = document.getElementById('fileMeme').files[0].name; 
+  filename = fullPath.replace(/^.*\\/, "");
 
   const botonGenerarMeme = document.getElementById('botonGenerar');
   botonGenerarMeme.addEventListener('click', registrarMeme); 

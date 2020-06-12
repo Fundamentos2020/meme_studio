@@ -1,5 +1,5 @@
 var canvas = document.getElementById("canvas");
-
+var filename = null;
 
 function cambiaFoto(){
     var ContextoCanvas = canvas.getContext("2d");
@@ -33,13 +33,6 @@ function changeImage(input) {
   }
 }
 
-var imagen=document.getElementsByClassName("imgthumbnail");
-for(i=0;i<imagen.length;i++){
-    imagen[i].onclick = function() { 
-        document.getElementById("image").src=this.src;
-        cambiaFoto(); 
-    };
-}
 
 function permitirCambios() {
     var x = document.getElementById("cambiar");
@@ -57,15 +50,6 @@ function permitirCambios() {
     }
   }
 
-function guardarCambios() {
-    var p = document.getElementById('Descripcion');
-    var btn = document.getElementById('guardarCambios');
-    var txt = document.getElementById('txtDescripcion');
-    btn.onclick = function(){
-        p.textContent = txt.value;
-    };
-}
-
 function mostrarMemes() {
     var m = document.getElementById("muestraMemes");
     
@@ -75,3 +59,93 @@ function mostrarMemes() {
       m.style.display = "none";
     }
   }
+
+  var fullPath = document.getElementById('fileMeme').files[0].name; 
+  filename = fullPath.replace(/^.*\\/, "");
+
+  var p = document.getElementById('Descripcion');
+  var btn = document.getElementById('guardarCambios');
+  var txt = document.getElementById('txtDescripcion');
+  /*btn.onclick = function(){
+      p.textContent = txt.value;
+  };*/
+
+  const botonGuardarCambios = document.getElementById('guardarCambios');
+  botonGuardarCambios.addEventListener('click', registrarCambios); 
+
+  function registrarCambios(e) {
+    e.preventDefault();
+
+    let sesion = getSesion();
+    if(sesion == null){
+        alert("Inicia sesión para poder guardar los cambios");
+        return;
+    }
+
+    const usuario_id = obtenerGetParam('usuario_id');
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("PATCH", API + "usuarios" , true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onload = function() {
+        var responseText = JSON.parse(this.responseText);
+        data = responseText.data;
+        if(this.status === 201) {
+            alert(responseText.messages);
+            window.location.href = "./perfilUsuario.html?usuario_id=" + usuario_id;
+        }
+        else {
+            alert(responseText.messages);
+        }
+    }
+
+    let json = {};
+
+    if(filename != null)
+      json['ruta_imagen_perfil'] = filename;
+    json['descripcion'] = txt.value;
+
+    var json_string = JSON.stringify(json);
+
+    xhr.send(json_string);
+}
+
+var contenedorMemes = document.getElementById("muestraMemes");
+const meme_id = obtenerGetParam('meme_id');
+const botonVer = document.getElementById('boton-ver-memes');
+botonVer.addEventListener('click', verMemes);
+
+function verMemes(e) {
+  var xhr =  new XMLHttpRequest();
+
+    xhr.open("GET", API + "memes/meme_id="+meme_id, true);
+
+    xhr.onload = function() {
+        var responseText = JSON.parse(this.responseText);
+        if(this.status == 200){
+            if(responseText.success === true){
+                var data = responseText.data;
+                
+                const memes = data.memes;
+                contenedorMeme.innerHTML = "";
+
+                if(meme.usuario_id === sesion.usuario_id){
+                  memes.forEach(function(meme){
+                      let addImg = 
+                          `
+                          <div class="pb-1"><img class="meme" src="https://picsum.photos/800/600" /></div>
+                          `
+                      contenedorMeme.innerHTML += addImg;
+                  });
+                }
+            }
+        }
+        else {
+            alert(responseText.messages);
+        }
+    };
+
+    xhr.send();
+}
+

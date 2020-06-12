@@ -2,7 +2,7 @@ let memesPorPagina = 5;
 let pagActual = 1;
 var numeroPaginas = 0;
 
-var contenedorMemes = document.getElementById("contenedor-memes");¿
+var contenedorMemes = document.getElementById("contenedor-memes");
 
 
 function init() {

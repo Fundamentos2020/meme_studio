@@ -35,19 +35,19 @@
         
         <div class="card row">
             <div class="card-header">
-                <img src="./imagenes/avatars/avatar.png" alt="Profile Image" class="profile-img" id="image">
+                <img src="./imagenes/avatars/avatar.png" alt="Profile Image" class="profile-img" id="imagePP">
             </div>
             <div class="my-4 text-center" id="cambiar">
-                <input class="entrada" type="file" id="filePP" value="Cambiar">
+                <input class="entrada" type="file" id="filePP" name="filePP">
             </div>
             <div class="card-body my-2">
                 <div id="info-usuario"></div>
 
                 <div class="text-center" id="cambiarD">
-                    <input class="entrada" type="text" id="txtDescripcion" value="Cambiar">
+                    <input class="entrada" type="text" id="txtDescripcion" value="">
                 </div>
                 <div class="text-center" id="guardar">
-                    <input class="entrada" type="button" id="guardarCambios" value="Guardar" onclick="guardarCambios();">
+                    <input class="entrada" type="button" id="guardarCambios" value="Guardar">
                 </div>
             </div>
         </div>
@@ -63,20 +63,7 @@
             </div>
         </div>
         <div class="row my-2" id="muestraMemes">
-            <div class="text-center">
-                <div class="col-m-3">
-                    <a href="publicacion.html"><img src="imagenes/plantillas/meme2.jpg" id="image" width="240" height="240"/></a>
-                </div>
-                <div class="col-m-3">
-                    <a href="publicacion.html"><img src="imagenes/plantillas/meme4.jpg" id="image" width="240" height="240"/></a>
-                </div>
-                <div class="col-m-3">
-                    <a href="publicacion.html"><img src="imagenes/plantillas/meme3.jpg" id="image" width="240" height="240"/></a>
-                </div>
-                <div class="col-m-3">
-                    <a href="publicacion.html"><img src="imagenes/plantillas/meme6.jpg" id="image" width="240" height="240"/></a>
-                </div>
-            </div>
+            
         </div>
     </div>
 
@@ -86,5 +73,6 @@
     <script src="scripts/navbar.js"></script>
     <script src="scripts/perfilUsuario.js"></script>
     <script src="scripts/cambioFotoPerfil.js"></script>
+    
 </body>
 </html>
