@@ -72,8 +72,13 @@ function obtenerComentarios() {
 
                 const comentarios = data.comentarios;
                 
+                const tiempoActual = Date.parse(obtenerFechaActual());
+
                 listaComentarios.innerHTML = "";
                 comentarios.forEach(function(comentario){
+                    var fecha_comentario = Date.parse(comentario.fecha_comentario);
+                    var horasDiferencia = Math.abs(tiempoActual - fecha_comentario) / 36e5;
+                    console.log(horasDiferencia);
                     let nuevoComentarioHtml = 
                     `
                     <li>
@@ -87,15 +92,24 @@ function obtenerComentarios() {
                                             ${comentario.nombre_usuario}
                                         </a>
                                     </h6>
-                                    <span>hace 20 minutos</span>
-                                </div>
+                                    <span>hace `;
+                    if(horasDiferencia < 1){
+                        nuevoComentarioHtml += horasDiferencia*60 + " minuto(s)";
+                    }
+                    else {
+                        horasDiferencia = Math.floor(horasDiferencia);
+                        nuevoComentarioHtml += horasDiferencia + " hora(s)";
+                    }
+                    
+
+                    nuevoComentarioHtml += `</div>
                                 <div class="comment-content">
                                     ${comentario.contenido}
                                 </div>
                             </div>
                         </div>
                     </li>
-                    `
+                    `;
                     listaComentarios.innerHTML += nuevoComentarioHtml;
                 });
             }
