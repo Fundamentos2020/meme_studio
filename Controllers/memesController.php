@@ -484,7 +484,6 @@ else if(array_key_exists("meme_id", $_GET)){
 
             $campos_query = "";
 
-            $actualiza_usuarioId = false;
             $actualiza_likes = false;
             $actualiza_dislikes = false;
             $actualiza_estado_meme = false;
@@ -495,10 +494,6 @@ else if(array_key_exists("meme_id", $_GET)){
             $actualiza_fechaCreacion = false;
             $actualiza_fechaPublicacion = false;
 
-            if (isset($json_data->usuario_id)) {
-                $actualiza_usuarioId = true;
-                $campos_query .= "usuario_id = :usuario_id, ";
-            }
             if (isset($json_data->likes)) {
                 $actualiza_likes = true;
                 $campos_query .= "likes = :likes, ";
@@ -538,13 +533,14 @@ else if(array_key_exists("meme_id", $_GET)){
 
             $campos_query = rtrim($campos_query, ", ");
 
-            if (!$actualiza_usuarioId && !$actualiza_likes && !$actualiza_dislikes && !$actualiza_estado_meme &&
-                !$actualiza_rutaImagenMeme && !$actualiza_titulo && !$actualiza_textoSuperior && !$actualiza_textoInferior &&
-                !$actualiza_fechaCreacion && !$actualiza_fechaPublicacion) {
+            if ($actualiza_likes === false && $actualiza_dislikes === false && $actualiza_estado_meme === false &&
+                $actualiza_rutaImagenMeme === false && $actualiza_titulo === false && $actualiza_textoSuperior === false && $actualiza_textoInferior === false &&
+                $actualiza_fechaCreacion === false && $actualiza_fechaPublicacion === false) {
                 $response = new Response();
                 $response->setHttpStatusCode(400);
                 $response->setSuccess(false);
                 $response->addMessage("No hay campos para actualizar");
+                $response->addMessage($json_data);
                 $response->send();
                 exit();
             }
@@ -579,11 +575,6 @@ else if(array_key_exists("meme_id", $_GET)){
             $cadena_query = 'UPDATE memes SET ' . $campos_query . ' WHERE meme_id =:meme_id';
             $query = $connection->prepare($cadena_query);
 
-            if($actualiza_usuarioId) {
-                $meme->setUsuarioID($json_data->usuario_id);
-                $up_usuarioId = $meme->getUsuarioID();
-                $query->bindParam(':usuario_id', $up_usuarioId, PDO::PARAM_INT);
-            }
             if($actualiza_likes) {
                 $meme->setLikes($json_data->likes);
                 $up_likes = $meme->getLikes();
@@ -595,7 +586,7 @@ else if(array_key_exists("meme_id", $_GET)){
                 $query->bindParam(':dislikes', $up_dislikes, PDO::PARAM_INT);
             }
             if($actualiza_estado_meme) {
-                $meme->setEstadoMeme($json_data->usuario_id);
+                $meme->setEstadoMeme($json_data->estado_meme);
                 $up_estadoMeme = $meme->getEstadoMeme();
                 $query->bindParam(':estado_meme', $up_estadoMeme, PDO::PARAM_STR);
             }

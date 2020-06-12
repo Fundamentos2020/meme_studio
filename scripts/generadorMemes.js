@@ -111,6 +111,9 @@ function mostrarPredeterminados() {
         if(this.status === 201) {
             alert(responseText.messages);
             window.location.href = "./index.html";
+            // Se debe generar la moderacion
+            if(data.memes[0].estado_meme == 'PENDIENTE')
+                registrarModeracion(data.memes[0].meme_id);
         }
         else {
             alert(responseText.messages);
@@ -121,13 +124,50 @@ function mostrarPredeterminados() {
     json['usuario_id'] = sesion.usuario_id;
     json['likes'] = 0;
     json['dislikes'] = 0;
-    json['estado_meme'] = 'ACEPTADO';
+    // El meme es público
+    if("checked".equals(getElementById('estadoMeme').value))
+        json['estado_meme'] = 'PENDIENTE';
+    // el meme es privado
+    else
+        json['estado_meme'] = 'PRIVADO';
     json['ruta_imagen_meme'] = filename;
     json['titulo'] = document.getElementById('TituloMeme').value;
     json['texto_superior'] = document.getElementById('textoArriba').value;
     json['texto_inferior'] = document.getElementById('textoAbajo').value;
     json['fecha_creacion'] = obtenerFechaActual();
     json['fecha_publicacion'] = obtenerFechaActual();
+
+    var json_string = JSON.stringify(json);
+
+    xhr.send(json_string);
+}
+
+function registrarModeracion(meme_id){
+  var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", API + "moderaciones" , true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onload = function() {
+        var responseText = JSON.parse(this.responseText);
+        data = responseText.data;
+        if(this.status === 201) {
+            alert(responseText.messages);
+            window.location.href = "./index.html";
+            // Se debe generar 
+            if(data.memes[0].estado_meme == 'PENDIENTE')
+              registrarModeracion();
+        }
+        else {
+            alert(responseText.messages);
+        }
+    }
+
+    let json = {};
+    json['meme_id'] = meme_id;
+    json['estatus_moderacion'] = 'PENDIENTE';
+    json['retroalimentacion'] = '';
+    json['fecha_solicitud'] = obtenerFechaActual();
 
     var json_string = JSON.stringify(json);
 

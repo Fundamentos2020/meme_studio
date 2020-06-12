@@ -110,7 +110,7 @@ class Meme {
     public function setEstadoMeme($estado_meme) {
         if (strtoupper($estado_meme) !== 'PRIVADO' && strtoupper($estado_meme) !== 'PENDIENTE'
         && strtoupper($estado_meme) !== 'RECHAZADO' && strtoupper($estado_meme) !== 'ACEPTADO') {
-            throw new TareaExcMemeExceptioneption("Error en campo estado meme del meme");
+            throw new MemeException("Error en campo estado meme del meme");
         }
         $this->_estado_meme = $estado_meme;
     }
