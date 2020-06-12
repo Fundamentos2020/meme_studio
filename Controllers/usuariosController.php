@@ -154,7 +154,7 @@ if(array_key_exists("usuario_id", $_GET)){
             }
     
             while($row = $query->fetch(PDO::FETCH_ASSOC)){
-                $usuario = new Usuario($row['usuario_id'], $row['nombre_completo'], $row['nombre_usuario'], $row['ruta_imagen_perfil'], $row['descripcion']);
+                $usuario = new Usuario($row['usuario_id'], $row['rol'], $row['nombre_completo'], $row['nombre_usuario'], $row['email'], $row['contrasena'], $row['ruta_imagen_perfil'], $row['descripcion']);
             }
     
             $cadena_query = 'UPDATE usuarios SET ' . $campos_query . ' WHERE usuario_id = :usuario_id';
