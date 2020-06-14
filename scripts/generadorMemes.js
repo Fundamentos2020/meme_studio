@@ -97,7 +97,7 @@ function mostrarPredeterminados() {
     document.getElementById("fileMeme").src = event.target.result;
     };
 
-    function downloadCanvas(link, canvasId, filename) {
+    function guardaImagenConTexto(link, canvasId, filename) {
       link.href = document.getElementById(canvasId).toDataURL();
       link.download = filename;
   }
@@ -134,10 +134,15 @@ function mostrarPredeterminados() {
     else
         json['estado_meme'] = 'PRIVADO';
 
-    if(filename != null)
-    json['ruta_imagen_meme'] = downloadCanvas(this, 'canvas', document.getElementById('TituloMeme').value);
-    else if(document.getElementById('image').src != null)
-        json['ruta_imagen_meme'] = downloadCanvas(this, 'canvas', document.getElementById('TituloMeme').value);
+    if(filename != null){
+        json['ruta_imagen_meme'] = filename;
+        //json['ruta_imagen_meme'] = guardaImagenConTexto(this, 'canvas', document.getElementById('TituloMeme').value);
+    }
+    else if(document.getElementById('image').src != null){
+        json['ruta_imagen_meme'] = document.getElementById('image').src;
+        //json['ruta_imagen_meme'] = guardaImagenConTexto(this, 'canvas', document.getElementById('TituloMeme').value);
+    }
+
     json['titulo'] = document.getElementById('TituloMeme').value;
     json['texto_superior'] = document.getElementById('textoArriba').value;
     json['texto_inferior'] = document.getElementById('textoAbajo').value;

@@ -50,6 +50,10 @@ function permitirCambios() {
     }
 }
 
+function addImagenPP(link, canvasId, filename) {
+  link.href = document.getElementById(canvasId).toDataURL();
+  link.download = filename;
+}
 
   var p = document.getElementById('Descripcion');
   var btn = document.getElementById('guardarCambios');
@@ -92,7 +96,7 @@ function permitirCambios() {
     var fullPath = document.getElementById('filePP').value; 
     filename = fullPath.replace(/^.*\\/, "");
 
-    json['ruta_imagen_perfil'] = filename;
+    json['ruta_imagen_perfil'] = addImagenPP(this, 'canvas', filename);
     if(txt.value != '')
       json['descripcion'] = txt.value;
 

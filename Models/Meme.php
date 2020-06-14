@@ -116,8 +116,8 @@ class Meme {
     }
 
     public function setRutaImagenMeme($ruta_imagen_meme) {
-        if ($ruta_imagen_meme === null || strlen($ruta_imagen_meme) > 1024 || strlen($ruta_imagen_meme) < 1) {
-            throw new MemeException("Error en título del meme");
+        if ($ruta_imagen_meme === null || strlen($ruta_imagen_meme) > 2048 || strlen($ruta_imagen_meme) < 1) {
+            throw new MemeException("Error en la ruta del meme");
         }
         $this->_ruta_imagen_meme = $ruta_imagen_meme;
     }
