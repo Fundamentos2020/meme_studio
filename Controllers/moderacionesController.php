@@ -301,7 +301,6 @@
                 $response = new Response();
                 $response->setHttpStatusCode(200);
                 $response->setSuccess(true);
-                $response->setToCache(true);
                 $response->setData($returnData);
                 $response->send();
                 exit();

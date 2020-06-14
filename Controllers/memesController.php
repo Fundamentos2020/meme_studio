@@ -630,7 +630,7 @@ else if(array_key_exists("meme_id", $_GET)){
                 $response = new Response();
                 $response->setHttpStatusCode(500);
                 $response->setSuccess(false);
-                $response->addMessage("Error al actualizar el meme");
+                $response->addMessage("Error al intentar actualizar el meme");
                 $response->send();
                 exit();
             }
@@ -759,7 +759,6 @@ else if(empty($_GET)){
             $response = new Response();
             $response->setHttpStatusCode(200);
             $response->setSuccess(true);
-            $response->setToCache(true);
             $response->setData($returnData);
             $response->send();
             exit();

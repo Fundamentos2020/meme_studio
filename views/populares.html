@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Populares - MemeStudio</title>
-        <link rel="stylesheet" href="estilo.css">
+        <link rel="stylesheet" href="../styles/estilo.css">
     </head>
     <body onload="init();">
         <nav class="topnav">
@@ -14,11 +14,11 @@
                 <li><a href="populares.html">Populares</a></li>
                 <li><a href="generador.html">Generador</a></li>
                 <li><a href="moderar.html">Moderar</a></li>
-                <li>
+                <!-- <li>
                     <div id="search">
                         <input type="search" placeholder="Buscar..">
                     </div>
-                </li>
+                </li> -->
                 <li><a id="btn-us" onclick="redirigirUsuario(this);" href="">Usuario</a></li>
                 <li class="boton-menu"><a href="javascript:void(0);" onclick="ajustarNavbar()">&#9776</a></li>
             </ul>
@@ -27,7 +27,7 @@
         <div class="py-2 container">
             <div class="p-1 mb-2 col-s-12 col-m-8 offset-m-2 back-white rounded-border">
                 <div class="popu">
-                    <h1 class="titulo-pop"><a href="populares.html">Diario</a>  /   <a href="popularesSemana.html">Semanal</a> /   Mensual /   <a href="popularesMejores.html">Los mejores memes</a></h1>
+                    <h1 class="titulo-pop">Diario  /   <a href="popularesSemana.html">Semanal</a> /   <a href="popularesMes.html">Mensual</a> /   <a href="popularesMejores.html">Los mejores memes</a></h1>
                 </div>
             </div>
         </div>
@@ -51,8 +51,10 @@
 
     </body>
 
-    <script src="scripts/app.js"></script>
-    <script src="scripts/botonUsuario.js"></script>
-    <script src="scripts/navbar.js"></script>
-    <script src="scripts/popularesMes.js"></script>
+    <script src="../../scripts/app.js"></script>
+    <script src="../../scripts/botonUsuario.js"></script>
+    <script src="../../scripts/navbar.js"></script>
+    <script src="../../scripts/likesDislikes.js"></script>
+    <script src="../../scripts/crearMeme.js"></script>
+    <script src="../../scripts/populares.js"></script>
 </html>
