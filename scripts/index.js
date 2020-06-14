@@ -83,3 +83,48 @@ function obtenerMemes() {
 
     xhr.send();
 }
+
+function cargarMemesTag(input){
+    if(input.value == ''){
+        obtenerMemes();
+        return;
+    }
+
+    var xhr =  new XMLHttpRequest();
+
+    xhr.open("GET", API + "memes/tag="+ input.value, true);
+
+    xhr.onload = function() {
+        var responseText = JSON.parse(this.responseText);
+        if(this.status == 200){
+            if(responseText.success === true){
+                var data = responseText.data;
+
+
+                const memes = data.memes;
+                let lim = (pagActual-1)*memesPorPagina, i = 0;
+                if(pagActual === 1)
+                {
+                    numeroPaginas = Math.ceil(memes.length / memesPorPagina);
+                    setPags(numeroPaginas);
+                }
+
+                contenedorMemes.innerHTML = " ";
+
+                memes.forEach(function(meme, index){
+                    if(index < lim || (index >= lim+memesPorPagina))
+                    {
+                        return;
+                    }
+                    
+                    contenedorMemes.innerHTML += crearHTMLMeme(meme);
+                });
+            }
+        }
+        else {
+            alert(responseText.messages);
+        }
+    };
+
+    xhr.send();
+}
