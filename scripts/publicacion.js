@@ -28,7 +28,7 @@ function obtenerMeme() {
                             <h3 class="pb-0p25">${meme.titulo}</h3>
                             <p><i>${meme.nombre_usuario}</i></p>
                         </div>
-                        <div class="pb-1"><img class="meme" src="https://picsum.photos/800/600" /></div>
+                        <div class="pb-1"><img class="meme" src="${meme.ruta_imagen_meme}" /></div>
                         <div class="mb-1 tags">Tags: ` 
                             if(meme.tags.length != 0)
                                 meme.tags.forEach(function(tag, index){ 
@@ -41,10 +41,10 @@ function obtenerMeme() {
                     addImg +=
                       `</div>
                        <div class="mb-1">
-                            <img class="icono" src="imagenes/pulgar_arriba.png">
-                            <label class="pb-1">${meme.likes}</label>
-                            <img class="icono" src="imagenes/pulgar_abajo.png">
-                            <label>${meme.dislikes}</label>
+                            <img class="icono" src="../imagenes/pulgar_arriba.png" onclick="incrementarLikes(${meme.meme_id});">
+                            <label id="countLikes${meme.meme_id}" class="pb-1">${meme.likes}</label>
+                            <img class="icono" src="../imagenes/pulgar_abajo.png" onclick="incrementarDislikes(${meme.meme_id});">
+                            <label id="countDislikes${meme.meme_id}">${meme.dislikes}</label>
                         </div>
                         `
                     contenedorMeme.innerHTML += addImg;
