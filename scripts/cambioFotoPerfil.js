@@ -129,7 +129,6 @@ function verMemes(e) {
                           `
                       contenedorMemes.innerHTML += addImg;
                   });
-                
             }
         }
         else {
