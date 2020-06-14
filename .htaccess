@@ -19,7 +19,7 @@ RewriteRule ^usuarios/([0-9]+)$ Controllers/usuariosController.php?usuario_id=$1
 
 #Sesiones
 RewriteRule ^sesiones$ Controllers/sesionesController.php [L]
-RewriteRule ^sesiones/([0-9]+)$ Controllers/sesionesController.php?id_sesion=$1 [L]
+RewriteRule ^sesiones/([0-9]+)$ Controllers/sesionesController.php?sesion_id=$1 [L]
 
 
 #Memes

@@ -13,9 +13,11 @@ function init(){
 }
 
 function obtenerModeraciones() {
+    let sesion = getSesion();
     var xhr =  new XMLHttpRequest();
 
     xhr.open("GET", API + "moderaciones", true);
+    xhr.setRequestHeader("Authorization", sesion.token_acceso);
 
     xhr.onload = function() {
         var responseText = JSON.parse(this.responseText);
@@ -26,7 +28,6 @@ function obtenerModeraciones() {
                 const pendientes = data.pendientes;
                 if(data.total_registros > 0)
                 {
-                    console.log(pendientes);
                     moderacion_id = pendientes[0].moderacion_id;
                     meme_id = pendientes[0].meme_id;
                     obtenerMeme(pendientes[0].meme_id);
@@ -36,6 +37,17 @@ function obtenerModeraciones() {
                         `<h2 class=\"my-1 text-center\">
                             No hay memes pendientes por moderar
                         </h2>`;
+            }
+        }
+        else if(this.status == 401) {
+            if (responseText.messages.indexOf("Token de acceso ha caducado") >= 0) {
+                refreshToken();
+                alert(responseText.messages);
+                window.location.reload();
+            }
+            else {
+                alert(responseText.messages);
+                window.location.href = "index.html";
             }
         }
         else {
@@ -94,11 +106,13 @@ function obtenerMeme(meme_id) {
 
 function generarModeracion(e){
     e.preventDefault();
+    let sesion = getSesion();
     
     var xhr =  new XMLHttpRequest();
 
     xhr.open("PATCH", API + "moderaciones/moderacion_id="+moderacion_id, true);
     xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Authorization", sesion.token_acceso);
 
     xhr.onload = function() {
         var responseText = JSON.parse(this.responseText);
@@ -108,7 +122,18 @@ function generarModeracion(e){
                 
                 modificarMeme(data.moderaciones[0].estatus_moderacion);
                 alert(responseText.messages);
-                window.location.href = './moderar.html'; 
+                window.location.reload();
+            }
+        }
+        else if(this.status == 401) {
+            if (responseText.messages.indexOf("Token de acceso ha caducado") >= 0) {
+                refreshToken();
+                alert(responseText.messages);
+                window.location.reload();
+            }
+            else {
+                alert(responseText.messages);
+                window.location.href = "index.html";
             }
         }
         else {

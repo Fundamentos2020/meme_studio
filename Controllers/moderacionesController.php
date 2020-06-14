@@ -16,6 +16,73 @@
         $response->send();
         exit();
     }
+    date_default_timezone_set("America/Mexico_City");
+
+    if (!isset($_SERVER['HTTP_AUTHORIZATION']) || strlen($_SERVER['HTTP_AUTHORIZATION']) < 1) {
+        $response = new Response();
+        $response->setHttpStatusCode(401);
+        $response->setSuccess(false);
+        $response->addMessage("No se encontró el token de acceso");
+        $response->send();
+        exit();
+    }
+    
+    $accesstoken = $_SERVER['HTTP_AUTHORIZATION']; 
+    
+    try {
+        $query = $connection->prepare('SELECT usuarios.usuario_id, caducidad_token_acceso FROM sesiones, usuarios WHERE sesiones.usuario_id = usuarios.usuario_id AND token_acceso = :token_acceso');
+        $query->bindParam(':token_acceso', $accesstoken, PDO::PARAM_STR);
+        $query->execute();
+    
+        $rowCount = $query->rowCount();
+    
+        if ($rowCount === 0) {
+            $response = new Response();
+            $response->setHttpStatusCode(401);
+            $response->setSuccess(false);
+            $response->addMessage("Token de acceso no válido");
+            $response->send();
+            exit();
+        }
+    
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+    
+        $consulta_idUsuario = $row['usuario_id'];
+        $consulta_cadTokenAcceso = $row['caducidad_token_acceso'];
+        if (strtotime($consulta_cadTokenAcceso) < time()) {
+            $response = new Response();
+            $response->setHttpStatusCode(401);
+            $response->setSuccess(false);
+            $response->addMessage("Token de acceso ha caducado");
+            $response->addMessage($consulta_cadTokenAcceso . " < " . date('Y-m-d H:i', time()));
+            $response->send();
+            exit();
+        }
+
+        $query = $connection->prepare('SELECT usuario_id, rol FROM usuarios WHERE usuario_id = :usuario_id AND rol = \'MODERADOR\'');
+        $query->bindParam(':usuario_id', $consulta_idUsuario, PDO::PARAM_STR);
+        $query->execute();
+
+        $rowCount = $query->rowCount();
+        if ($rowCount === 0) {
+            $response = new Response();
+            $response->setHttpStatusCode(401);
+            $response->setSuccess(false);
+            $response->addMessage("El usuario no tiene permisos de Moderador");
+            $response->send();
+            exit();
+        }
+    } 
+    catch (PDOException $e) {
+        error_log('Error en DB - ' . $e);
+    
+        $response = new Response();
+        $response->setHttpStatusCode(500);
+        $response->setSuccess(false);
+        $response->addMessage("Error al autenticar usuario");
+        $response->send();
+        exit();
+    }
 
     if(array_key_exists("moderacion_id", $_GET)){
         $moderacion_id = $_GET['moderacion_id'];

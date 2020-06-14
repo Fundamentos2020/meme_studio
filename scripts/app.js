@@ -23,7 +23,7 @@ function refreshToken() {
 
     var xhttp = new XMLHttpRequest();
 
-    xhttp.open("PATCH", api + "sesiones/" + sesion.id_sesion, false);
+    xhttp.open("PATCH", API + "sesiones/" + sesion.sesion_id, false);
     xhttp.setRequestHeader("Authorization", sesion.token_acceso);
     xhttp.setRequestHeader("Content-Type", "application/json");
 
