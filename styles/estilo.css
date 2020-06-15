@@ -861,3 +861,33 @@ h1{
 #sigsPags {
     justify-content: center;
 }
+
+.img-container {
+    width: fit-content;
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.texto-superior {
+    width: 100%;
+    position: absolute;
+    top: 1em;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    
+    font: 1.4em sans-serif;
+    text-transform: uppercase;
+    text-shadow: 1.5px 0 0 #000, 0 -1.5px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+
+.texto-inferior {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+    font: 1.4em sans-serif;
+    text-transform: uppercase;
+    text-shadow: 1.5px 0 0 #000, 0 -1.5px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}

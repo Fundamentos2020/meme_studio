@@ -1,4 +1,5 @@
 function crearHTMLMeme(meme){
+    console.log(meme);
     let memeHTML = 
     `<div class="p-1 mb-2 col-s-12 col-m-8 offset-m-2 back-white rounded-border">
         <div class="row">
@@ -7,7 +8,16 @@ function crearHTMLMeme(meme){
                     <h3 class="pb-0p25">${meme.titulo}</h3>
                     <p>Creado por <i>${meme.nombre_usuario}</i></p>
                 </div>
-                <div class="pb-1"><img class="meme" src="${meme.ruta_imagen_meme}" alt="meme" /></div>
+                <div class="pb-1">
+                    <div class="img-container">`;
+    if(meme.texto_superior != null)
+        memeHTML += `<div class="texto-superior">${meme.texto_superior}</div>`;
+    if(meme.texto_inferior != null)
+        memeHTML += `<div class="texto-inferior">${meme.texto_inferior}</div>`;
+
+             memeHTML+=`<img class="meme" src="${meme.ruta_imagen_meme}" alt="meme" />
+                    </div>
+                </div>
                 <div class="mb-1 tags">Tags: `;
 
     if(meme.tags.length != 0)
