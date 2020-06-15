@@ -1,5 +1,4 @@
 function crearHTMLMeme(meme){
-    console.log(meme);
     let memeHTML = 
     `<div class="p-1 mb-2 col-s-12 col-m-8 offset-m-2 back-white rounded-border">
         <div class="row">

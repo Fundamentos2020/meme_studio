@@ -44,5 +44,11 @@ function ocultarBotones(){
     if(sesion == null || sesion.usuario_id != usuario_id){
         document.getElementById('boton-editar').style = "display: none;";
         document.getElementById('boton-ver-memes').style = "display: none;";
+        document.getElementById('boton-cerrar-sesion').style = "display: none;";
     }
+}
+
+function cerrarSesion(){
+    localStorage.removeItem('usuario_sesion');
+    window.location.href = "index.html";
 }

@@ -2,6 +2,7 @@ var moderacion_id;
 var meme_id;
 const contenedorMemeInfo = document.getElementById('contenedor-info');
 const imagenMeme = document.getElementById('imagen-meme');
+const contenedorImg = document.getElementById('contenedor-img');
 const botonAceptar = document.getElementById('botonAceptar');
 const botonRechazar = document.getElementById('botonRechazar');
 
@@ -89,6 +90,16 @@ function obtenerMeme(meme_id) {
                                 addImg += "No hay tags asignados";
                     addImg += `</div>`
                     contenedorMemeInfo.innerHTML += addImg;
+
+                    
+                    contenedorImg.innerHTML=`<div class="img-container">`;
+                    if(meme.texto_superior != null)
+                        contenedorImg.innerHTML += `<div class="texto-superior">${meme.texto_superior}</div>`;
+                    if(meme.texto_inferior != null)
+                        contenedorImg.innerHTML += `<div class="texto-inferior">${meme.texto_inferior}</div>`;
+
+                    contenedorImg.innerHTML+=`<img class="meme" src="${meme.ruta_imagen_meme}" alt="meme" /></div>`;
+
                     
                     imagenMeme.src = meme.ruta_imagen_meme;
                 });
