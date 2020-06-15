@@ -28,8 +28,19 @@ function obtenerMeme() {
                             <h3 class="pb-0p25">${meme.titulo}</h3>
                             <p><i>${meme.nombre_usuario}</i></p>
                         </div>
-                        <div class="pb-1"><img class="meme" src="${meme.ruta_imagen_meme}" /></div>
-                        <div class="mb-1 tags">Tags: ` 
+                        <div class="pb-1">
+                            <div class="img-container">`;
+                        
+                    if(meme.texto_superior != null)
+                        addImg += `<div class="texto-superior">${meme.texto_superior}</div>`;
+                    if(meme.texto_inferior != null)
+                        addImg += `<div class="texto-inferior">${meme.texto_inferior}</div>`;
+                
+                    addImg+=`<img class="meme" src="${meme.ruta_imagen_meme}" alt="meme" />
+                        </div>
+                    </div>
+                    <div class="mb-1 tags">Tags: `;
+
                             if(meme.tags.length != 0)
                                 meme.tags.forEach(function(tag, index){ 
                                     addImg += tag; 
@@ -78,7 +89,6 @@ function obtenerComentarios() {
                 comentarios.forEach(function(comentario){
                     var fecha_comentario = Date.parse(comentario.fecha_comentario);
                     var horasDiferencia = Math.abs(tiempoActual - fecha_comentario) / 36e5;
-                    console.log(horasDiferencia);
                     let nuevoComentarioHtml = 
                     `
                     <li>

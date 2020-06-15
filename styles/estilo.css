@@ -289,6 +289,10 @@ label.logo{
     padding: 2em;
 }
 
+.m-1 { margin: 1em;}
+.m-2 { margin: 2em;}
+.m-3 { margin: 3em;}
+
 .mx-1 {
     margin-right: 1em;
     margin-left: 1em;
@@ -860,4 +864,34 @@ h1{
 
 #sigsPags {
     justify-content: center;
+}
+
+.img-container {
+    width: fit-content;
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.texto-superior {
+    width: 100%;
+    position: absolute;
+    top: 1em;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    
+    font: 1.4em sans-serif;
+    text-transform: uppercase;
+    text-shadow: 1.5px 0 0 #000, 0 -1.5px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+
+.texto-inferior {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+    font: 1.4em sans-serif;
+    text-transform: uppercase;
+    text-shadow: 1.5px 0 0 #000, 0 -1.5px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }

@@ -16,6 +16,7 @@ catch (PDOException $e){
     $response->send();
     exit();
 }
+date_default_timezone_set("America/Mexico_City");
 
 if (array_key_exists('sesion_id', $_GET)) {
     $sesion_id = $_GET['sesion_id'];
@@ -119,7 +120,7 @@ if (array_key_exists('sesion_id', $_GET)) {
         try{
             $token_actualizacion = $jsonData->token_actualizacion;
 
-            $query = $connection->prepare('SELECT sesiones.sesion_id AS sesion_id, sesiones.usuario_id, token_acceso, token_actualizacion, caducidad_token_acceso, caducidad_token_actualizacion FROM sesiones, usuarios WHERE sesiones.usuario_id = usuarios.id AND sesiones.id = :sesion_id AND sesiones.token_acceso = :token_acceso AND token_actualizacion = :token_actualizacion');
+            $query = $connection->prepare('SELECT sesiones.sesion_id AS sesion_id, sesiones.usuario_id, token_acceso, token_actualizacion, caducidad_token_acceso, caducidad_token_actualizacion FROM sesiones, usuarios WHERE sesiones.usuario_id = usuarios.usuario_id AND sesiones.sesion_id = :sesion_id AND sesiones.token_acceso = :token_acceso AND token_actualizacion = :token_actualizacion');
             $query->bindParam(':sesion_id', $sesion_id, PDO::PARAM_INT);
             $query->bindParam(':token_acceso', $accesstoken, PDO::PARAM_STR);
             $query->bindParam(':token_actualizacion', $token_actualizacion, PDO::PARAM_STR);
@@ -186,7 +187,7 @@ if (array_key_exists('sesion_id', $_GET)) {
 
             $returnData = array();
             $returnData['sesion_id'] = $sesion_id;
-            $returnData['usuario_id'] = $usuario_id;
+            $returnData['usuario_id'] = $consulta_usuario_id;
             $returnData['token_acceso'] = $token_acceso;
             $returnData['caducidad_token_acceso'] = $caducidad_tacceso_s;
             $returnData['token_actualizacion'] = $token_actualizacion;
