@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../styles/estilo.css">
 
 </head>
-<body onload="permitirCambios(); init();">
+<body onload="permitirCambios(); init(); mostrarPredeterminados();">
     <nav class="topnav">
         <label class="logo">MemeStudio</label>
         <ul>
@@ -30,11 +30,10 @@
         
         <div class="card row">
             <div class="card-header">
-                <img src="../imagenes/avatars/avatar.png" alt="Profile Image" class="profile-img" id="imagePP">
-                    
+                <img src="../imagenes/avatars/avatar.png" alt="Profile Image" class="profile-img" id="imagePP""/>
             </div>
             <div class="my-4 text-center" id="cambiar">
-                <input class="entrada" type="file" id="filePP" name="filePP">
+                <input class="entrada" type="button" value="Seleccionar Imagen" name="filePP" onclick="mostrarPredeterminados();">
             </div>
             <div class="card-body my-2">
                 <div id="info-usuario"></div>
@@ -56,6 +55,24 @@
                         <input id="boton-ver-memes" class="entrada" type="button" value="Ver memes guardados" onclick="mostrarMemes();">
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="panel panel-default" id="mostrarPlantillas">
+            <div class="panel-body">
+                <div class="row pb-1">
+                    <div class="col-xs-2 col-m-2"><a href="#" class="">
+                    <img src="../imagenes/avatars/avatar.png"  class="imgthumbnail" height="200" width="200"></a></div>
+                    <div class="col-xs-2 col-m-2"><a href="#" class="">
+                    <img src="../imagenes/avatars/avatar1.jpg" class="imgthumbnail" height="200" width="200"></a></div>
+                    <div class="col-xs-2 col-m-2"><a href="#" class="">
+                    <img src="../imagenes/avatars/avatar2.jpg" class="imgthumbnail" height="200" width="200"></a></div>
+                    <div class="col-xs-2 col-m-2"><a href="#" class="">
+                    <img src="../imagenes/avatars/avatar3.jpg" class="imgthumbnail" height="200" width="200"></a></div>
+                    <div class="col-xs-2 col-m-2"><a href="#" class="">
+                    <img src="../imagenes/avatars/avatar4.jpg" class="imgthumbnail" height="200" width="200"></a></div>
+                    <div class="col-xs-2 col-m-2"><a href="#" class="">
+                    <img src="../imagenes/avatars/avatar5.jpg" class="imgthumbnail" height="200" width="200"></a></div>
+                </div>
             </div>
         </div>
         <div class="row my-2" id="contenedor-memes">

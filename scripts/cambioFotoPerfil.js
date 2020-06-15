@@ -50,6 +50,15 @@ function permitirCambios() {
     }
 }
 
+function mostrarPredeterminados() {
+  var m = document.getElementById("mostrarPlantillas");
+  if (m.style.display === "none") {
+    m.style.display = "block";
+  } else {
+    m.style.display = "none";
+  }
+}
+
 function addImagenPP(link, canvasId, filename) {
   link.href = document.getElementById(canvasId).toDataURL();
   link.download = filename;
@@ -94,9 +103,9 @@ function addImagenPP(link, canvasId, filename) {
 
     let json = {};
     var fullPath = document.getElementById('filePP').value; 
-    filename = fullPath.replace(/^.*\\/, "");
+    //filename = fullPath.replace(/^.*\\/, "");
 
-    json['ruta_imagen_perfil'] = addImagenPP(this, 'canvas', filename);
+    json['ruta_imagen_perfil'] = addImagenPP(this, 'canvas', document.getElementById('filePP').value);
     if(txt.value != '')
       json['descripcion'] = txt.value;
 
