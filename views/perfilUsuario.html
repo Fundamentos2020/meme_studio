@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../styles/estilo.css">
 
 </head>
-<body onload="permitirCambios(); init(); mostrarPredeterminados();">
+<body onload="init(); initUsuario();">
     <nav class="topnav">
         <label class="logo">MemeStudio</label>
         <ul>
@@ -30,10 +30,15 @@
         
         <div class="card row">
             <div class="card-header">
-                <img src="../imagenes/avatars/avatar.png" alt="Profile Image" class="profile-img" id="imagePP""/>
+                <div id="mostrar">
+
+                </div>
+                    <!----<canvas style="max-width:50%"; id="canvas"></canvas>---->
             </div>
             <div class="my-4 text-center" id="cambiar">
-                <input class="entrada" type="button" value="Seleccionar Imagen" name="filePP" onclick="mostrarPredeterminados();">
+                <div class="row my-2">
+                    <input class="entrada" type="button" value="Seleccionar" onclick="mostrarPredeterminados();">
+                </div>
             </div>
             <div class="card-body my-2">
                 <div id="info-usuario"></div>
@@ -52,7 +57,7 @@
                 <form class="">
                     <div class="pb-1">
                         <input id="boton-editar" class="entrada" type="button" value="Editar información" onclick="permitirCambios();">
-                        <input id="boton-ver-memes" class="entrada" type="button" value="Ver memes guardados" onclick="mostrarMemes();">
+                        <input id="boton-ver-memes" class="entrada" type="button" value="Ver memes guardados" onclick="permitirVer();">
                     </div>
                 </form>
             </div>
@@ -71,18 +76,20 @@
                     <div class="col-xs-2 col-m-2"><a href="#" class="">
                     <img src="../imagenes/avatars/avatar4.jpg" class="imgthumbnail" height="200" width="200"></a></div>
                     <div class="col-xs-2 col-m-2"><a href="#" class="">
-                    <img src="../imagenes/avatars/avatar5.jpg" class="imgthumbnail" height="200" width="200"></a></div>
+                    <img src="../imagenes/avatars/avatar5.png" class="imgthumbnail" height="200" width="200"></a></div>
                 </div>
             </div>
         </div>
-        <div class="row my-2" id="contenedor-memes">
+        <div id="verMemesGuardados">
+            <div class="row my-2" id="contenedor-memes">
+        </div>
             
         </div>
     </div>
 
     
     <script src="../scripts/app.js"></script>
-    <script src="../scripts/cambioFotoPerfil.js"></script>
+    <script src="../scripts/cambiosPerfilUsuario.js"></script>
     <script src="../scripts/botonUsuario.js"></script>
     <script src="../scripts/navbar.js"></script>
     <script src="../scripts/perfilUsuario.js"></script>
