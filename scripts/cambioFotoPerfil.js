@@ -128,7 +128,7 @@ function verMemes(e) {
                 
                 memes.forEach(function(meme, index){
                     if(index%3 == 0){
-                        contenedorMemes.innerHTML += '<div class="row">';
+                        contenedorMemes.innerHTML += '<div class="row"><div class="offset-m-1">';
                     }
                     let memeHTML = 
                         `<div class="col-m-3 col-s-11 m-1">
@@ -158,8 +158,8 @@ function verMemes(e) {
                         
                     contenedorMemes.innerHTML += memeHTML;
                     
-                    if(index%3 == 0){
-                        contenedorMemes.innerHTML += '</div>';
+                    if(index%3 == 2){
+                        contenedorMemes.innerHTML += '</div></div>';
                     }
                 });
             }

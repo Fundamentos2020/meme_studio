@@ -880,7 +880,7 @@ h1{
     left: 50%;
     transform: translate(-50%, 0%);
     
-    font: 1.4em sans-serif;
+    font: 1.3em sans-serif;
     text-transform: uppercase;
     text-shadow: 1.5px 0 0 #000, 0 -1.5px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
@@ -891,7 +891,17 @@ h1{
     left: 50%;
     transform: translate(-50%, 0%);
 
-    font: 1.4em sans-serif;
+    font: 1.3em sans-serif;
     text-transform: uppercase;
     text-shadow: 1.5px 0 0 #000, 0 -1.5px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+
+@media screen and (max-width: 866px){
+    .texto-superior {
+        font: 1em sans-serif;
+    }
+    
+    .texto-inferior {
+        font: 1em sans-serif;
+    }
 }
