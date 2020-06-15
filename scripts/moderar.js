@@ -42,7 +42,6 @@ function obtenerModeraciones() {
         else if(this.status == 401) {
             if (responseText.messages.indexOf("Token de acceso ha caducado") >= 0) {
                 refreshToken();
-                alert(responseText.messages);
                 window.location.reload();
             }
             else {
@@ -128,7 +127,6 @@ function generarModeracion(e){
         else if(this.status == 401) {
             if (responseText.messages.indexOf("Token de acceso ha caducado") >= 0) {
                 refreshToken();
-                alert(responseText.messages);
                 window.location.reload();
             }
             else {

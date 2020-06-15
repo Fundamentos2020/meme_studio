@@ -123,16 +123,45 @@ function verMemes(e) {
                 var data = responseText.data;
                 
                 const memes = data.memes;
-                contenedorMemes.innerHTML = "";
+                contenedorMemes.innerHTML = '';
 
                 
-                  memes.forEach(function(meme){
-                      let addImg = 
-                          `
-                          <div class="pb-1"><img class="meme" src="https://picsum.photos/800/600" /></div>
-                          `
-                      contenedorMemes.innerHTML += addImg;
-                  });
+                memes.forEach(function(meme, index){
+                    if(index%3 == 0){
+                        contenedorMemes.innerHTML += '<div class="row">';
+                    }
+                    let memeHTML = 
+                        `<div class="col-m-3 col-s-11 m-1">
+                            <div class="back-white rounded-border">
+                                <div class="row">
+                                    <div class="col-s-12 p-1">
+                                        <div>
+                                            <h4 class="pb-1">${meme.titulo}</h4>
+                                        </div>
+                                        <div>
+                                            <div class="img-container">`;
+                    if(meme.texto_superior != null)
+                        memeHTML +=             `<div class="texto-superior">${meme.texto_superior}</div>`;
+                    if(meme.texto_inferior != null)
+                        memeHTML +=             `<div class="texto-inferior">${meme.texto_inferior}</div>`;
+                
+                    memeHTML+=`
+                                                <img class="meme" src="${meme.ruta_imagen_meme}" alt="meme" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                        
+                    contenedorMemes.innerHTML += memeHTML;
+                    
+                    if(index%3 == 0){
+                        contenedorMemes.innerHTML += '</div>';
+                    }
+                });
             }
         }
         else {
