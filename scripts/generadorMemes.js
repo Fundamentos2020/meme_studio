@@ -39,10 +39,10 @@ function GenerarMeme(){
 };
 
 
-var fileTag = document.getElementById("fileMeme"),
-    preview = document.getElementById("image");
+//var fileTag = document.getElementById("fileMeme"),
+    //var preview = document.getElementById("image");
     
-fileTag.addEventListener("change", function() {
+/*fileTag.addEventListener("change", function() {
   changeImage(this);
 });
 
@@ -56,7 +56,7 @@ function changeImage(input) {
     }
     reader.readAsDataURL(input.files[0]);
   }
-}
+}*/
 
 var imagen=document.getElementsByClassName("imgthumbnail");
 for(i=0;i<imagen.length;i++){
@@ -75,8 +75,8 @@ function mostrarPredeterminados() {
     }
   }
 
-  if(document.getElementById('fileMeme').files[0] != undefined)
-  var fullPath = document.getElementById('fileMeme').files[0].name;
+  //if(document.getElementById('fileMeme').files[0] != undefined)
+  //var fullPath = document.getElementById('fileMeme').files[0].name;
   //filename = fullPath.replace(/^.*\\/, "");
 
   const botonGenerarMeme = document.getElementById('botonGenerar');
@@ -96,11 +96,6 @@ function mostrarPredeterminados() {
     reader.onload = function (event) {
     document.getElementById("fileMeme").src = event.target.result;
     };
-
-    function guardaImagenConTexto(link, canvasId, filename) {
-      link.href = document.getElementById(canvasId).toDataURL();
-      link.download = filename;
-  }
 
     var xhr = new XMLHttpRequest();
 
@@ -135,7 +130,7 @@ function mostrarPredeterminados() {
         json['estado_meme'] = 'PRIVADO';
 
     if(filename != null){
-        json['ruta_imagen_meme'] = filename;
+        json['ruta_imagen_meme'] = document.getElementById('image').src;
         //json['ruta_imagen_meme'] = guardaImagenConTexto(this, 'canvas', document.getElementById('TituloMeme').value);
     }
     else if(document.getElementById('image').src != null){

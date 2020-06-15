@@ -18,7 +18,7 @@
     }
     date_default_timezone_set("America/Mexico_City");
 
-    if (!isset($_SERVER['HTTP_AUTHORIZATION']) || strlen($_SERVER['HTTP_AUTHORIZATION']) < 1) {
+    /*if (!isset($_SERVER['HTTP_AUTHORIZATION']) || strlen($_SERVER['HTTP_AUTHORIZATION']) < 1) {
         $response = new Response();
         $response->setHttpStatusCode(401);
         $response->setSuccess(false);
@@ -82,7 +82,7 @@
         $response->addMessage("Error al autenticar usuario");
         $response->send();
         exit();
-    }
+    }*/
 
     if(array_key_exists("moderacion_id", $_GET)){
         $moderacion_id = $_GET['moderacion_id'];

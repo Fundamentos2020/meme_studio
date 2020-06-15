@@ -1,3 +1,10 @@
+function initUsuario(){
+  permitirCambios();
+  mostrarPredeterminados(); 
+  permitirVer(); 
+  verFotoPerfil();
+}
+
 var canvas = document.getElementById("canvas");
 var filename = null;
 
@@ -10,28 +17,18 @@ function cambiaFoto(){
         canvas.height = canvas.width * (ObjetoImagen.height / ObjetoImagen.width);
         ContextoCanvas.drawImage(ObjetoImagen, 0, 0, canvas.width , canvas.height); 
     };
-    ObjetoImagen.src = document.getElementById("image").src; 
+    ObjetoImagen.src = document.getElementById("imagePP").src; 
 };
 
 
-var fileTag = document.getElementById("filePP"),
-    preview = document.getElementById("image");
-    
-fileTag.addEventListener("DOMContentLoaded", function() {
-  changeImage(this);
-});
-
-function changeImage(input) {
-  var reader;
-  if (input.files && input.files[0]) {
-    reader = new FileReader();
-    reader.onload = function(e) {
-      preview.setAttribute('src', e.target.result);
-      cambiaFoto();
-    }
-    reader.readAsDataURL(input.files[0]);
-  }
+var imagen = document.getElementsByClassName("imgthumbnail");
+for(i=0;i<imagen.length;i++){
+    imagen[i].onclick = function() { 
+        document.getElementById("imagePP").src = this.src;
+        //cambiaFoto(); 
+    };
 }
+    
 
 
 function permitirCambios() {
@@ -48,6 +45,25 @@ function permitirCambios() {
       y.style.display = "none";
       z.style.display = "none";
     }
+}
+
+function permitirVer() {
+  var x = document.getElementById("verMemesGuardados");
+  
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function mostrarPredeterminados() {
+  var m = document.getElementById("mostrarPlantillas");
+  if (m.style.display === "none") {
+    m.style.display = "block";
+  } else {
+    m.style.display = "none";
+  }
 }
 
 function addImagenPP(link, canvasId, filename) {
@@ -93,10 +109,10 @@ function addImagenPP(link, canvasId, filename) {
     }
 
     let json = {};
-    var fullPath = document.getElementById('filePP').value; 
-    filename = fullPath.replace(/^.*\\/, "");
-
-    json['ruta_imagen_perfil'] = addImagenPP(this, 'canvas', filename);
+    if(filename != null)
+      json['ruta_imagen_perfil'] = document.getElementById('imagePP').src;
+    else if(document.getElementById('imagePP').src != null)
+      json['ruta_imagen_perfil'] = document.getElementById('imagePP').src;
     if(txt.value != '')
       json['descripcion'] = txt.value;
 
@@ -146,7 +162,7 @@ function verMemes(e) {
                         memeHTML +=             `<div class="texto-inferior">${meme.texto_inferior}</div>`;
                 
                     memeHTML+=`
-                                                <img class="meme" src="${meme.ruta_imagen_meme}" alt="meme" />
+                                                <a href="publicacion.html?meme_id=${meme.meme_id}"><img class="meme" src="${meme.ruta_imagen_meme}" alt="meme" /></a>
                                             </div>
                                         </div>
                                     </div>
@@ -172,3 +188,30 @@ function verMemes(e) {
     xhr.send();
 }
 
+
+var imagenPerfil = document.getElementById("mostrar");
+function verFotoPerfil() {
+  var xhr =  new XMLHttpRequest();
+
+  xhr.open("GET", API + "usuarios/usuario_id="+usuario_id, true);
+
+  xhr.onload = function() {
+      var responseText = JSON.parse(this.responseText);
+      if(this.status == 200){
+          if(responseText.success === true){
+              var data = responseText.data;
+              
+              const datos = data.usuarios[0];
+              imagenPerfil.innerHTML = 
+                `
+                  <img src="${datos.ruta_imagen_perfil}" alt="Profile Image" class="profile-img" id="imagePP"" />
+                `;
+          }
+      }
+      else {
+          alert(responseText.messages);
+      }
+  };
+
+  xhr.send();
+}
